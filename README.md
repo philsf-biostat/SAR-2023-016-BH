@@ -8,10 +8,7 @@ Statistical Analysis for Brennan Hickson (US, 2023)
 ## Analyses performed
 
 1. Descriptive analysis
-1. Inferential analysis
-1. Power analysis
 1. Missing data imputation
-1. Statistical models
 
 ## Documents
 
