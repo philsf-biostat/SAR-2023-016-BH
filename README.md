@@ -1,6 +1,8 @@
 # Migration patterns in a cohort of individuals with brain injury in the US
 
-Objective
+1. To describe de mobility patterns when individuals in the cohort move neighborhoods;
+1. To describe the missingness in zip codes at each follow up collection;
+1. To impute missing Zip codes with data available in previous follow up collections.
 
 <!-- Statistical Analysis for Brennan Hickson (US, 2023) -->
 Technical Report for Brennan Hickson (US, 2023)
