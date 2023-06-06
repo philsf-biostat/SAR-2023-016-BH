@@ -1,5 +1,5 @@
 ---
-title: '[title]'
+title: 'Migration patterns in a cohort of individuals with brain injury in the US'
 date: ""
 permalink: /portfolio/SAR-2023-016/
 redirect_from:
