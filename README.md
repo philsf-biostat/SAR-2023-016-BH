@@ -2,8 +2,8 @@
 
 Objective
 
-Statistical Analysis for Brennan Hickson (US, 2023)
-<!-- Technical Report for Brennan Hickson (US, 2023) -->
+<!-- Statistical Analysis for Brennan Hickson (US, 2023) -->
+Technical Report for Brennan Hickson (US, 2023)
 
 ## Analyses performed
 
