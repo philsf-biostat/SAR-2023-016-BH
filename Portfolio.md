@@ -1,5 +1,5 @@
 ---
-title: '[title]'
+title: 'Migration patterns in a cohort of individuals with brain injury in the US'
 date: ""
 permalink: /portfolio/SAR-2023-016/
 redirect_from:
@@ -7,46 +7,28 @@ redirect_from:
   - /SAR-2023-016-BH/
   - /SAR-2023-016/
 categories:
-  - case-control
-  - cross-sectional
   - longitudinal-studies
   - cohort
-  - clinical-trial
-  - ecological
   - epidemiology
-  - bioassay
-  - systematic-review
   - technical-report
-  - data-product
 tags:
-  - prevalence
   - incidence
-  - diagnostic-models
   - prognostic-models
   - imputation-models
   - survival-analysis
-  - efficacy
-  - concordance-analysis
-  - survey
-  - meta-analysis
-  - decision-trees
-  - machine-learning
-  - unsupervised-learning
-  - data-instrument
 ---
 
-Objective
+1. To describe de mobility patterns when individuals in the cohort move neighborhoods;
+1. To describe the missingness in zip codes at each follow up collection;
+1. To impute missing Zip codes with data available in previous follow up collections.
 
-Statistical Analysis for PERSON (PLACE, yyyy)
-<!-- Technical Report for PERSON (PLACE, yyyy) -->
+<!-- Statistical Analysis for Brennan Hickson (US, 2023) -->
+Technical Report for Brennan Hickson (US, 2023)
 
 ## Analyses performed
 
 1. Descriptive analysis
-1. Inferential analysis
-1. Power analysis
 1. Missing data imputation
-1. Statistical models
 
 ## Documents
 
@@ -65,13 +47,17 @@ Statistical Analysis for PERSON (PLACE, yyyy)
 
 - [PDF][sar]
 
-<!-- ## Associated analyses -->
+## Associated analyses
 
-<!-- This analysis is part of a larger project and is supported by other analyses, linked below. -->
+This analysis is part of a larger project and is supported by other analyses, linked below.
 
-<!-- **[assoc_title]** -->
+**Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
 
-<!-- <[assoc_link]> -->
+<https://philsf-biostat.github.io/SAR-2023-004-BH/>
+
+**Sensitivity of mortality rates to imputation of missing socioeconomic data after brain injury: cohort study**
+
+<https://philsf-biostat.github.io/SAR-2023-017-BH/>
 
 <!-- --- -->
 
