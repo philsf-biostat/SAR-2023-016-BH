@@ -248,7 +248,7 @@ In order to assess if there is an effect of the SES of the neighborhood to which
 The estimates on the association between SES quintiles and mortality will be compared across models in a sensitivity analysis to gauge the cumulative effect of each set of covariates.
 
 The proportional hazards assumption will be tested by assessing the the distribution of Schoenfeld residuals against time, the Schoenfeld test and the distribution of Martingale residuals of time-dependent covariates against the null model.
-In order to keep the maximum number of time-dependent covariates in the final model, we plan to perform the residual analysis combining the following approaches: stratification by categorical variables, time splitting and non-linear fitting of covariates using splines.
+In order to keep the maximum number of time-dependent covariates in the final model, we plan to perform the residual analysis combining the following approaches: stratification by categorical variables, adding explicit interactions with time, time splitting and non-linear fitting of covariates using polynomials or splines.
 Time-dependent covariates that fail these approaches will be removed before the final model is evaluated and described.
 
 <!-- Finally, the same model will be fitted to a filtered dataset that excludes all deaths happening within one year, to assess if there is an effect on late mortality in a sensitivity analysis. -->
