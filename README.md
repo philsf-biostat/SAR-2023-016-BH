@@ -1,4 +1,4 @@
-# Migration patterns in a cohort of individuals with brain injury in the US
+# Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort
 
 1. To describe de mobility patterns when individuals in the cohort move neighborhoods;
 1. To describe the missingness in zip codes at each follow up collection;

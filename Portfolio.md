@@ -1,5 +1,5 @@
 ---
-title: 'Migration patterns in a cohort of individuals with brain injury in the US'
+title: 'Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort'
 date: ""
 permalink: /portfolio/SAR-2023-016/
 redirect_from:
