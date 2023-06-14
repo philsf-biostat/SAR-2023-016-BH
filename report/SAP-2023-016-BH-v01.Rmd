@@ -132,6 +132,7 @@ observations from
 The date of death of participants was available, and its presence was used as an indicator of the living status of the participant at each follow up.
 All variables in the raw dataset had varying missing data codes in the data dictionary made available by the researcher, which were used to attribute missingness status to each datum.
 Most of the categorical variables were measured with many levels that were condensed into fewer levels for analysis.
+The quartiles for each of the both FIM scores were calculated for each individual and saved as two separate variables as covariates for the analysis.
 
 <!-- After the cleaning process -->
 <!-- `r Nvar_final` -->
