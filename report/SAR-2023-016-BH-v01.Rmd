@@ -131,7 +131,7 @@ See also Figure A2 in the appendix for the distribution of sexes in each SES qui
 knitr::include_graphics("../figures/outcome.png", error = FALSE)
 ```
 
-## Effect of SES on mortality
+## Time-dependent effect of SES on mortality
 
 The previous seizure disorder diagnosis was missing for most of the study population and was not included in the model as a covariate to preserve study power.
 After excluding participants with missing data from other variables a total of `r style_number(Nobs_model)` complete cases were available for analysis.
