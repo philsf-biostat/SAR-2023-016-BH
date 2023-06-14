@@ -42,8 +42,8 @@ panderOptions('table.split.table', 160)
 **Document version**
 
 ```{r history}
-Version <- c("01", "02")
-Changes <- c("Initial version", "Added methods to account for time-dependent covariates")
+Version <- c("01")
+Changes <- c("Initial version")
 history <- cbind(Version, Changes)
 colnames(history) <- c("Version", "Alterations")
 # pander(history, split.cells = 70)
