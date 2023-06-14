@@ -55,7 +55,7 @@ res.full.d <- resid(mod.full, type = "deviance")
 res.full.s <- resid(mod.full, type = "dfbeta")
 
 # Martingale residuals
-png("figures/diag_full-mar.png")
+png("figures/diag_full-mar.png", h = h, w = h)
 plot(res.full.m, ylab = "Martingale residuals")
 lines(lowess(res.full.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 # identify(res.full.m)
@@ -72,7 +72,7 @@ res.null.m <- resid(mod.null, type = "martingale")
 
 # Martingale: covariates against null -------------------------------------
 
-png("figures/diag_null_cause-mar.png")
+png("figures/diag_null_cause-mar.png", h = h, w = h)
 plot(md$Cause, res.null.m, ylab = "Martingale residuals")
 lines(lowess(md$Cause, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 dev.off()
