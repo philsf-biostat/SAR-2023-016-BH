@@ -1,8 +1,8 @@
 ---
-title: "Analytical Plan for [title]"
-subtitle: 'DOCUMENT: SAP-2023-016-BH-v01'
-author: '**From:** Felipe Figueiredo **To:** ___'
-date: "`r Sys.Date()`"
+title: "Analytical Plan for Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort"
+subtitle: 'DOCUMENT: SAP-2023-004-BH-v02'
+author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
+date: "2023-06-01"
 output:
   html_document:
     fig_caption: yes
@@ -37,13 +37,13 @@ panderOptions('table.split.table', 160)
 
 \newpage
 
-**Analytical Plan for [title]**
+**Analytical Plan for Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
 
 **Document version**
 
 ```{r history}
-Version <- c("01")
-Changes <- c("Initial version")
+Version <- c("01", "02")
+Changes <- c("Initial version", "Added methods to account for time-dependent covariates")
 history <- cbind(Version, Changes)
 colnames(history) <- c("Version", "Alterations")
 # pander(history, split.cells = 70)
@@ -58,32 +58,37 @@ source("scripts/input.R", encoding = 'UTF-8')
 
 # Abbreviations
 
-- BMI: body mass index
-- CI: confidence interval
-- CV: coefficient of variation
-- d: Cohen's D effect size
+- FIM: Functional Independence Measure
 - HR: hazards ratio
-- IQR: interquartile range
-- IRR: incidence rate ratio
-- OR: odds ratio
-- RR: risks ratio
 - SD: standard deviation
+- SES: socioeconomic status
 
 # Context
 
 ## Objectives
 
+To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury.
+
 ## Hypotheses
+
+The neighborhood to which an individual is discharged from acute care affects the mortality rates of individuals that suffered a brain injury.
 
 # Data
 
 ## Raw data
 
+The raw data was received in three distinct databases, one containing clinical and epidemiological data, a second one with follow up on the status of individuals and a third one containing SES information of each Zip code.
+The clinical and followup tables were merged by study ID, and this was joined with the SES table by the Zip code of the neighborhood of discharge, resulting in the original raw data base.
+
+<!-- Before joining the tables by zip code, the missing locations at discharged were assumed to not have changed since injury, and those values were used to fill missing zip data where available. -->
+<!-- To maximize the availability of SES data, this was also assumed for each follow up location, where the preferred information used was the zip code at discharge, when available. -->
+
 The original data base had
 `r Nvar_orig`
 variables collected on
 `r Nobs_orig`
-observations.
+observations from
+`r Nobs_orig_id` individuals.
 
 <!-- Upon study start the raw data will be collected in a raw table, that will be processed before analysis. -->
 <!-- The raw dataset to be collected will have -->
@@ -124,6 +129,10 @@ observations.
 
 ## Analytical dataset
 
+The date of death of participants was available, and its presence was used as an indicator of the living status of the participant at each follow up.
+All variables in the raw dataset had varying missing data codes in the data dictionary made available by the researcher, which were used to attribute missingness status to each datum.
+Most of the categorical variables were measured with many levels that were condensed into fewer levels for analysis.
+
 <!-- After the cleaning process -->
 <!-- `r Nvar_final` -->
 <!-- variables were included in the analysis -->
@@ -134,11 +143,11 @@ After the cleaning process
 `r Nvar_final`
 variables were included in the analysis.
 The total number of observations excluded due to incompleteness and exclusion criteria will be reported in the analysis.
-Table 1 shows the structure of the analytical dataset.
+<!-- Table 1 shows the structure of the analytical dataset. -->
 
 ```{r analytical data}
-analytical_mockup %>%
-  pander(caption = "**Table 1** Analytical dataset structure after variable selection and cleaning.")
+# analytical_mockup %>%
+#   pander(caption = "**Table 1** Analytical dataset structure after variable selection and cleaning.")
 ```
 
 All variables in the analytical set were labeled according to the raw data provided and values were labeled according to the data dictionary for the preparation of production-quality results tables and figures.
@@ -147,22 +156,66 @@ All variables in the analytical set were labeled according to the raw data provi
 
 ## Study design
 
+Retrospective cohort.
+
 ## Inclusion and exclusion criteria
 
+**Inclusion criteria**
+
+- Participants with at most 10 years of follow up;
+- Participants included in the cohort between `r study_period[1]` and `r study_period[2]`.
+- Participants with non-negative time under observation.
+
+**Exclusion criteria**
+
+Observations after 2019-12-31 will be excluded in order to mitigate risk of confounding by COVID-19 related deaths.
+Observations prior to this date will still be considered for participants where such data is available.
+
 ## Exposures
+
+SES of the neighborhood to which the participant was discharged.
+The SES measure was stratified into its quintiles, and labelled according to the data dictionary to facilitate interpretation of the results.
 
 ## Outcomes
 
 **Specification of outcome measures** (Zarin, 2011):
 
-1. (Domain)
-2. (Specific measurement)
-3. (Specific metric)
-4. (Method of aggregation)
+1. (Domain) Mortality
+2. (Specific measurement) Death
+3. (Specific metric) Time-to-event
+4. (Method of aggregation) Hazard ratio
 
 **Primary outcome**
 
+Death after a brain injury.
+
 ## Covariates
+
+Covariates will be included in the models in sets (section 5.1.3).
+
+Demographic covariates:
+
+- Sex
+- Race
+- Age at injury
+- Education
+- Employment status
+
+Clinical covariates:
+
+- Cause of injury
+- Substance Problem Use
+- Previous seizure disorder diagnosis
+- Spinal cord injury
+- Primary rehabilitation payer
+- Days From Injury to Rehab Discharge
+- FIM Motor at Discharge quartiles
+- FIM Cognitive at Discharge quartiles
+
+Geographical covariates:
+
+- Rural area
+- Residence after rehab discharge
 
 # Statistical methods
 
@@ -172,31 +225,33 @@ All variables in the analytical set were labeled according to the raw data provi
 
 The epidemiological profile of the study participants will be described.
 Demographic
-(sex, age and BMI)
 and clinical variables
-<!-- ( [vars] ) -->
 will be described as
 mean (SD)
-<!-- median (IQR) -->
 or as counts and proportions (%), as appropriate.
 The distributions of participants' characteristics will be summarized in tables and visualized in exploratory plots.
 
 ### Inferential analyses
 
-All comparisons between groups will be performed as univariate analyses.
-Continuous variables will be compared between groups with the
-independent t test with Welch correction.
-<!-- paired t test. -->
-<!-- Mann-Whitney test. -->
-<!-- signed rank Wilcoxon test. -->
-Differences in distribution of categorical variables will be assessed with the
-Fisher exact test.
-<!-- chi-square test. -->
-<!-- McNemar test. -->
-
-<!-- All inferential analyses will be performed in the statistical models (described in the next section). -->
+All inferential analyses will be performed in the statistical models (described in the next section).
 
 ### Statistical modeling
+
+The hazard of mortality will be assessed with multivariate Cox regression models.
+In order to assess if there is an effect of the SES of the neighborhood to which the participant was discharged on mortality will be assessed with four nested models.
+
+1. A crude estimate of the HR between each SES quintiles and mortality will be calculated as the basis of interpretation of the effect.
+1. Model 2 will include demographic covariates on top of the crude estimate.
+1. Model 3 will add clinical covariates on top of model 2.
+1. Model 4 will add geographical covariates to model 3, i.e., it will be calculated adjusting for all covariates described in section 4.5.
+
+The estimates on the association between SES quintiles and mortality will be compared across models in a sensitivity analysis to gauge the cumulative effect of each set of covariates.
+
+The proportional hazards assumption will be tested by assessing the the distribution of Schoenfeld residuals against time, the Schoenfeld test and the distribution of Martingale residuals of time-dependent covariates against the null model.
+In order to keep the maximum number of time-dependent covariates in the final model, we plan to perform the residual analysis combining the following approaches: stratification by categorical variables, time splitting and non-linear fitting of covariates using splines.
+Time-dependent covariates that fail these approaches will be removed before the final model is evaluated and described.
+
+<!-- Finally, the same model will be fitted to a filtered dataset that excludes all deaths happening within one year, to assess if there is an effect on late mortality in a sensitivity analysis. -->
 
 ### Missing data
 
@@ -214,32 +269,6 @@ two-tailed.
 
 ## Study size and Power
 
-```{r}
-n <- analytical %>%
-  count(exposure) %>%
-  pull(n)
-n1 <- n[1]
-n2 <- n[2]
-total <- sum(n)
-d <- pwr::pwr.t2n.test(n1 = n1, n2 = n2, power = .8, sig.level = .05)$d %>%
-  format.float()
-d <- pwr::pwr.t.test(n = total/2, power = .8, sig.level = .05)$d %>%
-  format.float()
-```
-
-<!-- Study groups were balanced and the total sample size was `r total` including all groups. -->
-
-<!-- Study groups were not balanced with -->
-<!-- group1 with `r n1` participants -->
-<!-- and -->
-<!-- group2 with `r n2` participants -->
-<!-- with a total study size of `r total`. -->
-<!-- This power analysis adjusts for different group sizes. -->
-
-<!-- With these group sizes a t test can detect an effect size as large as -->
-<!-- **d = `r d`** -->
-<!-- with 80% power and 5% significance level (Cohen, 1988). -->
-
 N/A
 
 ## Statistical packages
@@ -252,23 +281,16 @@ This analysis will be performed using statistical software `R` version `r getRve
 
 The adoption of the EQUATOR network (<http://www.equator-network.org/>) reporting guidelines have seen increasing adoption by scientific journals.
 All observational studies are recommended to be reported following the STROBE guideline (von Elm et al, 2014).
-<!-- All clinical trials are recommended to be reported following the CONSORT guideline (Schulz K F, Altman D G, Moher D., 2010). -->
-<!-- All systematic reviews are recommended to be reported following the PRISMA guideline (Page et al, 2021). -->
-<!-- All protocols for systematic reviews are recommended to be reported following the PRISMA-P guideline (Page et al, 2021). -->
 
 <!-- In particular when a retrospective study is conducted using hospital records, it is recommended that the RECORD extension of the STROBE guideline is considered (Benchimol et al, 2015). -->
 
 # References
 
-- **SAR-2023-016-BH-v01** -- [title]
+- **SAR-2023-004-BH-v02** -- Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort
 <!-- - Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd Ed.). New York: Routledge. -->
 - Zarin DA, et al. The ClinicalTrials.gov results database -- update and key issues. N Engl J Med 2011;364:852-60 (<https://doi.org/10.1056/NEJMsa1012065>).
 - Gamble C, et al. Guidelines for the Content of Statistical Analysis Plans in Clinical Trials. JAMA. 2017;318(23):2337–2343 (<https://doi.org/10.1001/jama.2017.18556>).
 - von Elm E, Altman DG, Egger M, Pocock SJ, Gøtzsche PC, Vandenbroucke JP; STROBE Initiative. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) Statement: guidelines for reporting observational studies. Int J Surg. 2014 Dec;12(12):1495-9 (<https://doi.org/10.1016/j.ijsu.2014.07.013>).
-<!-- - Benchimol EI, Smeeth L, Guttmann A, Harron K, Moher D, Petersen I, Sørensen HT, von Elm E, Langan SM; RECORD Working Committee. The REporting of studies Conducted using Observational Routinely-collected health Data (RECORD) statement. PLoS Med. 2015 Oct 6;12(10):e1001885 (<https://doi.org/10.1371/journal.pmed.1001885>). -->
-<!-- - Schulz K F, Altman D G, Moher D. CONSORT 2010 Statement: updated guidelines for reporting parallel group randomised trials BMJ 2010; 340 :c332 (<https://doi.org/10.1136/bmj.c332>). -->
-<!-- - Page M J, McKenzie J E, Bossuyt P M, Boutron I, Hoffmann T C, Mulrow C D et al. The PRISMA 2020 statement: an updated guideline for reporting systematic reviews BMJ 2021; 372 :n71 (<https://doi.org/10.1136/bmj.n71>). -->
-<!-- - Moher D, Shamseer L, Clarke M, Ghersi D, Liberati A, Petticrew M, Shekelle P, Stewart LA. Preferred Reporting Items for Systematic Review and Meta-Analysis Protocols (PRISMA-P) 2015 statement. Syst Rev. 2015;4(1):1 (<https://doi.org/10.1186/2046-4053-4-1>). -->
 
 # Appendix
 
@@ -287,15 +309,15 @@ All documents from this consultation were included in the consultant's Portfolio
 
 The portfolio is available at:
 
-<https://philsf-biostat.github.io/SAR-2023-016-BH/>
+<https://philsf-biostat.github.io/SAR-2023-004-BH/>
 
 ## Associated analyses
 
 This analysis is part of a larger project and is supported by other analyses, linked below.
 
-**Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
+**Migration patterns in a cohort of individuals with brain injury in the US**
 
-<https://philsf-biostat.github.io/SAR-2023-004-BH/>
+<https://philsf-biostat.github.io/SAR-2023-016-BH/>
 
 **Sensitivity of mortality rates to imputation of missing socioeconomic data after brain injury: cohort study**
 
