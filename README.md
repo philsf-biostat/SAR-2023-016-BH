@@ -1,6 +1,9 @@
 # Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study
 
-To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury, accounting for time-dependent covariates.
+This analysis expands on a previous analysis with a similar objective (**SAR-2023-004-BH-v02**), by employing more flexible modeling strategies to include time-dependent covariates that were dropped from the previous analysis.
+In the process the raw FIM scores were substituted by their quartiles.
+
+The objective of this analysis is to determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury, accounting for time-dependent covariates.
 
 Statistical Analysis for Brennan Hickson (US, 2023)
 <!-- Technical Report for Brennan Hickson (US, 2023) -->

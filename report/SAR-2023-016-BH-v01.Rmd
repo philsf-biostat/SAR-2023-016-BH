@@ -65,6 +65,9 @@ source("scripts/results.R", encoding = 'UTF-8')
 
 # Context
 
+This analysis expands on a previous analysis with a similar objective (**SAR-2023-004-BH-v02**), by employing more flexible modeling strategies to include time-dependent covariates that were dropped from the previous analysis.
+In the process the raw FIM scores were substituted by their quartiles.
+
 ## Objectives
 
 To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury, accounting for time-dependent covariates.
@@ -208,6 +211,7 @@ Both early deaths and late deaths appear to occur at similar rates across all ne
 # References
 
 - **SAP-2023-016-BH-v01** -- Analytical Plan for Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study
+- **SAR-2023-004-BH-v02** -- Effect of socioeconomic status in mortality rates after brain injury: cohort study
 - von Elm E, Altman DG, Egger M, Pocock SJ, Gøtzsche PC, Vandenbroucke JP; STROBE Initiative. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) Statement: guidelines for reporting observational studies. Int J Surg. 2014 Dec;12(12):1495-9 (<https://doi.org/10.1016/j.ijsu.2014.07.013>).
 
 # Appendix
