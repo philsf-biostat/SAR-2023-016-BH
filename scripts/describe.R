@@ -1,12 +1,8 @@
 # setup -------------------------------------------------------------------
 
-# library(Hmisc) # describe
 # library(skimr) # skim
-# library(gmodels) # CrossTable
 library(gtsummary)
 library(gt)
-# library(effectsize)
-# library(finalfit) # missing_compare
 
 # setup gtsummary theme
 
@@ -19,20 +15,11 @@ theme_gtsummary_compact()
 # overall description
 # analytical %>% skimr::skim()
 
-# minimum detectable effect size
-# interpret_cohens_d(0.5)
-# cohens_d(outcome ~ exposure, data = analytical) %>% interpret_cohens_d()
-# interpret_icc(0.7)
+# outcome by exposure
+analytical %>% group_by(exposure) %>% skimr::skim(outcome)
 
 # tables ------------------------------------------------------------------
 
-tab_desc <- analytical %>%
-  tbl_summary(
-    include = -id,
-    # by = exposure,
-  ) %>%
-  # modify_caption(caption = "**Tabela 1** Características demográficas") %>%
-  # modify_header(label ~ "**Características dos pacientes**") %>%
-  # pretty format categorical variables
-  bold_labels() %>%
-  modify_table_styling(columns = "label", align = "center")
+# tables are created in tables-save.R and saved to disk. They are loaded here
+
+tab_desc <- read_rds("dataset/tab_desc_016.rds")
