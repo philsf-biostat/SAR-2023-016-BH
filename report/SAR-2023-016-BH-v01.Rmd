@@ -1,7 +1,7 @@
 ---
-title: "[title]"
-subtitle: 'DOCUMENT: SAR-2023-016-BH-v01'
-author: '**From:** Felipe Figueiredo **To:** ___'
+title: "Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort"
+subtitle: 'DOCUMENT: SAR-2023-004-BH-v02'
+author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -37,13 +37,13 @@ panderOptions('table.split.table', 160)
 
 \newpage
 
-**[title]**
+**Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
 
 **Document version**
 
 ```{r history}
-Version <- c("01")
-Changes <- c("Initial version")
+Version <- c("01", "02")
+Changes <- c("Initial version", "Added methods to account for time-dependent covariates")
 history <- cbind(Version, Changes)
 colnames(history) <- c("Version", "Alterations")
 # pander(history, split.cells = 70)
@@ -58,9 +58,16 @@ source("scripts/results.R", encoding = 'UTF-8')
 
 # Abbreviations
 
+- FIM: Functional Independence Measure
+- HR: hazards ratio
+- SD: standard deviation
+- SES: socioeconomic status
+
 # Context
 
 ## Objectives
+
+To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury.
 
 <!-- ## Data reception and cleaning -->
 
@@ -88,22 +95,67 @@ This analysis was performed using statistical software `R` version `r getRversio
 
 ## Study population and follow up
 
+There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nobs_orig_id)` study participants considered for inclusion.
+After excluding follow up measurements during the COVID-19 pandemic to mitigate confounding on mortality causes there were `r style_number(Nobs_incl_per)` observations left in the study sample.
+After applying the inclusion criteria for the study period between `r study_period[1]` and `r study_period[2]` and considering the status at the last available follow up time for each individual a total of `r style_number(Nobs_final)` participants were included in the analysis.
+
+The epidemiological profile of the participant included in the study was a
+male participant (`r inline_text(tab_desc, variable = SexF, level = "Male")`)
+with an average (SD) age of `r inline_text(tab_desc, variable = AGE)` years.
+The average (SD) time of follow up was `r inline_text(tab_desc, variable = Time)` years.
+
+Races were not homogeneously available in the study population with
+`r inline_text(tab_desc, variable = Race, level = "White")` individuals being white;
+`r inline_text(tab_desc, variable = Mar, level = "Single (Never Married)")` were single (never married) at the time of injury,
+and most participants were well educated with `r inline_text(tab_desc, variable = EDUCATION, level = "Greater Than High School")` at greater than high school level.
+A total of `r inline_text(tab_desc, variable = EMPLOYMENT, level = "Employed")` were employed and
+`r inline_text(tab_desc, variable = RURALdc, level = "Urban")` participants lived in an urban area.
+
 ```{r tab_desc}
 tab_desc %>%
   as_kable(              # only for markdown
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 1** caption"
+    caption = "**Table 1** Epidemiological, demographic and clinical characteristics of study participants."
   )
 ```
 
-```{r fig1, fig.cap="**Figure 1** caption"}
+The observed overall mortality was 13.5% in the study period.
+The distribution of cases appear homogeneous across SES quintiles (Figure 1), ranging from 10.6% to 13.5%.
+We will test the effect of SES quintiles on the hazard rate in the next section.
+See also Figure A2 in the appendix for the distribution of sexes in each SES quintile in the study population.
+
+```{r fig1, fig.cap="**Figure 1** Proportion of cases per SES quintiles."}
 # ![Age](../figures/outcome.png)
-# knitr::include_graphics("../figures/outcome.png", error = FALSE)
+knitr::include_graphics("../figures/outcome.png", error = FALSE)
 ```
 
-## Inferential analysis
+## Effect of SES on mortality
+
+The previous seizure disorder diagnosis was missing for most of the study population and was not included in the model as a covariate to preserve study power.
+After excluding participants with missing data from other variables a total of `r style_number(Nobs_model)` complete cases were available for analysis.
+The cause of injury and both FIM scales were removed from the model due to violations to the proportional hazards assumption (see Figure A4 in the appendix for the Schoenfeld residuals and p-values for each variable in the full model).
+
+The survival curves of both sexes by SES quintiles can be seen in Figure 2.
+Overall, the distressed neighborhoods appear to have a lower survival probability then other neighborhoods.
+This appears to be true for both sexes, and males had a higher risk of dying than females in all neighborhoods.
+This plot was cropped at `r style_percent(crop, symbol = TRUE)` survival for presentation purposes, see Figure A3 in the appendix for an uncropped version.
+
+```{r fig2, fig.cap="**Figure 2** Survival of participants, by sex and by SES quintiles."}
+# ![Age](../figures/outcome.png)
+knitr::include_graphics("../figures/surv.png", error = FALSE)
+```
+
+When considering only the crude effect of SES on mortality neighborhood to which the individuals were discharged was associated with mortality (Table 2).
+Participants who were discharged to an at-risk neighborhood had increased chance of dying
+(HR = `r inline_text(tab_inf, variable = exposure, level = "At-Risk", column = estimate_1)`,
+95% CI = `r inline_text(tab_inf, variable = exposure, level = "At-Risk", column = conf.low_1)` to `r inline_text(tab_inf, variable = exposure, level = "At-Risk", column = conf.high_1)`),
+when compared to those discharged to a prosperous neighborhood.
+Participants discharged to a distressed neighborhood also had a higher mortality risk
+(HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_1)`,
+95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_1)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_1)`),
+when compared to those discharged to a prosperous neighborhood.
 
 ```{r tab_inf}
 tab_inf %>%
@@ -111,27 +163,87 @@ tab_inf %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 2** caption"
+    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, substance abuse, education, employment status, urbanization, spinal cord injury, rehabilitation payer, residence after rehab discharge and days from injury to discharge."
   )
+
+range_crude <- tab_inf$tbls[[1]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
+range_adj   <- tab_inf$tbls[[2]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
+range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 ```
+
+After controlling for all relevant covariates, this effect can only be consistently detected for the distressed neighborhoods, that exhibit a
+`r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased
+risk of dying than prosperous neighborhoods
+(HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`,
+95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_2)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_2)`).
+The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`).
+
+When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range
+from `r range_late[1]` to `r range_late[2]`
+(which is an even narrower range than the crude estimates).
+The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power).
+The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods.
+In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of
+`r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR.
+It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates.
 
 # Observations and Limitations
 
+**Recommended reporting guideline**
+
+The adoption of the EQUATOR network (<http://www.equator-network.org/>) reporting guidelines have seen increasing adoption by scientific journals.
+All observational studies are recommended to be reported following the STROBE guideline (von Elm et al, 2014).
+
+<!-- In particular when a retrospective study is conducted using hospital records, it is recommended that the RECORD extension of the STROBE guideline is considered (Benchimol et al, 2015). -->
+
 # Conclusions
+
+The epidemiological profile of the study participant is an 31 years old white male, that has greater than high school level of education, is actively employed and lives in an urban setting.
+
+There appears to be a crude effect of SES on mortality, where participants that were discharged to either a comfortable or a distressed neighborhood had increased risk of death when compared to those discharged to a prosperous neighborhood.
+After controlling for other variables there is no association between SES and mortality.
+
+Both early deaths and late deaths appear to occur at similar rates across all neighborhoods.
 
 # References
 
-- **SAP-2023-016-BH-v01** -- Analytical Plan for [title]
+- **SAP-2023-004-BH-v02** -- Analytical Plan for Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort
+- von Elm E, Altman DG, Egger M, Pocock SJ, Gøtzsche PC, Vandenbroucke JP; STROBE Initiative. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) Statement: guidelines for reporting observational studies. Int J Surg. 2014 Dec;12(12):1495-9 (<https://doi.org/10.1016/j.ijsu.2014.07.013>).
 
 # Appendix
 
 ## Exploratory data analysis
 
-N/A
-
 ```{r A1, fig.cap="**Figure A1** Distribution of age in the study population."}
 # ![Age](../figures/distr_age.png)
-# knitr::include_graphics("../figures/distr_age.png", error = FALSE)
+knitr::include_graphics("../figures/distr_age.png", error = FALSE)
+```
+
+```{r A2, fig.cap="**Figure A2** Distribution of SES in the study population."}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/distr_ses.png", error = FALSE)
+```
+
+```{r A3, fig.cap="**Figure A3** Alternative version of figure 2."}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/surv_uncrop.png", error = FALSE)
+```
+
+## Modeling strategy
+
+```{r A4, fig.cap="**Figure A4** Schoenfeld residuals for the full model."}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag.png", error = FALSE)
+```
+
+```{r tab_app}
+tab_app %>%
+  as_kable(              # only for markdown
+  # as_flex_table(       # only for DOCX
+  # ) %>%
+  # flextable::set_caption(
+    caption = "**Table A1** Alternative version of Table 2, showing effects from all covariates included in the model."
+  )
 ```
 
 ## Availability
@@ -163,11 +275,11 @@ This analysis is part of a larger project and is supported by other analyses, li
 
 ## Analytical dataset
 
-Table A1 shows the structure of the analytical dataset.
+Table A2 shows the structure of the analytical dataset.
 
 ```{r data}
 analytical_mockup %>%
-  pander(caption = "**Table A1** Analytical dataset structure")
+  pander(caption = "**Table A2** Analytical dataset structure", split.table = Inf)
 ```
 
 Due to confidentiality the data-set used in this analysis cannot be shared online in the public version of this report.
