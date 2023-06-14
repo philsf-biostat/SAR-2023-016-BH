@@ -1,5 +1,5 @@
 ---
-title: "Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort"
+title: "Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study"
 subtitle: 'DOCUMENT: SAR-2023-016-BH-v01'
 author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
 date: "`r Sys.Date()`"
@@ -37,7 +37,7 @@ panderOptions('table.split.table', 160)
 
 \newpage
 
-**Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
+**Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study**
 
 **Document version**
 
@@ -207,7 +207,7 @@ Both early deaths and late deaths appear to occur at similar rates across all ne
 
 # References
 
-- **SAP-2023-016-BH-v01** -- Analytical Plan for Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort
+- **SAP-2023-016-BH-v01** -- Analytical Plan for Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study
 - von Elm E, Altman DG, Egger M, Pocock SJ, Gøtzsche PC, Vandenbroucke JP; STROBE Initiative. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) Statement: guidelines for reporting observational studies. Int J Surg. 2014 Dec;12(12):1495-9 (<https://doi.org/10.1016/j.ijsu.2014.07.013>).
 
 # Appendix
@@ -265,7 +265,7 @@ The portfolio is available at:
 
 This analysis is part of a larger project and is supported by other analyses, linked below.
 
-**Effect of socioeconomic status in mortality rates after brain injury: retrospective cohort**
+**Effect of socioeconomic status in mortality rates after brain injury: cohort study**
 
 <https://philsf-biostat.github.io/SAR-2023-004-BH/>
 
