@@ -2,7 +2,7 @@
 title: "Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study"
 subtitle: 'DOCUMENT: SAR-2023-016-BH-v01'
 author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
-date: "`r Sys.Date()`"
+date: "2023-06-06"
 output:
   html_document:
     fig_caption: yes
