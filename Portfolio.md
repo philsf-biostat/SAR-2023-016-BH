@@ -54,7 +54,7 @@ This analysis is part of a larger project and is supported by other analyses, li
 
 <https://philsf-biostat.github.io/SAR-2023-004-BH/>
 
-**Sensitivity of mortality rates to imputation of missing socioeconomic data after brain injury: cohort study**
+**Sensitivity of mortality rates to the imputation of missing socioeconomic data: cohort study**
 
 <https://philsf-biostat.github.io/SAR-2023-017-BH/>
 
