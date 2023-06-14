@@ -312,8 +312,20 @@ mod.full.time <- update(mod.full, . ~ . + DAYStoREHABdc:Time + FIMMOTD:Time + FI
 res.full.time.sch <- cox.zph(mod.full.time)
 sch(res.full.time.sch)
 
+png("figures/diag_time-sch.png", h = 2*h, w = 3*w)
 par(mfrow = c(2,3))
-plot(cox.zph(mod.full.time, transform = "identity")[c(13:18)])
+plot(cox.zph(mod.full.time, transform = "identity")[13])
+abline(h=0, col = "red", lwd = 2)
+plot(cox.zph(mod.full.time, transform = "identity")[14])
+abline(h=0, col = "red", lwd = 2)
+plot(cox.zph(mod.full.time, transform = "identity")[15])
+abline(h=0, col = "red", lwd = 2)
+plot(cox.zph(mod.full.time, transform = "identity")[16])
+abline(h=0, col = "red", lwd = 2)
+plot(cox.zph(mod.full.time, transform = "identity")[17])
+abline(h=0, col = "red", lwd = 2)
+plot(cox.zph(mod.full.time, transform = "identity")[18])
+abline(h=0, col = "red", lwd = 2)
 dev.off()
 
 # strata
