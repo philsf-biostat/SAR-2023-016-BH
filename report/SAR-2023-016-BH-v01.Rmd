@@ -67,7 +67,7 @@ source("scripts/results.R", encoding = 'UTF-8')
 
 ## Objectives
 
-To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury.
+To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury, accounting for time-dependent covariates.
 
 <!-- ## Data reception and cleaning -->
 
