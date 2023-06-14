@@ -308,24 +308,24 @@ dev.off()
 # Interaction with time ---------------------------------------------------
 
 # full
-mod.full.time <- update(mod.full, . ~ . + DAYStoREHABdc:Time + FIMMOTD:Time + FIMCOGD:Time)
+mod.full.time <- update(mod.full, . ~ . -DAYStoREHABdc -FIMMOTD -FIMCOGD + DAYStoREHABdc:Time + FIMMOTD:Time + FIMCOGD:Time)
 res.full.time.sch <- cox.zph(mod.full.time)
 sch(res.full.time.sch)
 
-png("figures/diag_time-sch.png", h = 2*h, w = 3*w)
-par(mfrow = c(2,3))
+png("figures/diag_time-sch.png", h = h, w = 3*w)
+par(mfrow = c(1,3))
 plot(cox.zph(mod.full.time, transform = "identity")[13])
 abline(h=0, col = "red", lwd = 2)
 plot(cox.zph(mod.full.time, transform = "identity")[14])
 abline(h=0, col = "red", lwd = 2)
 plot(cox.zph(mod.full.time, transform = "identity")[15])
 abline(h=0, col = "red", lwd = 2)
-plot(cox.zph(mod.full.time, transform = "identity")[16])
-abline(h=0, col = "red", lwd = 2)
-plot(cox.zph(mod.full.time, transform = "identity")[17])
-abline(h=0, col = "red", lwd = 2)
-plot(cox.zph(mod.full.time, transform = "identity")[18])
-abline(h=0, col = "red", lwd = 2)
+# plot(cox.zph(mod.full.time, transform = "identity")[16])
+# abline(h=0, col = "red", lwd = 2)
+# plot(cox.zph(mod.full.time, transform = "identity")[17])
+# abline(h=0, col = "red", lwd = 2)
+# plot(cox.zph(mod.full.time, transform = "identity")[18])
+# abline(h=0, col = "red", lwd = 2)
 dev.off()
 
 # strata
