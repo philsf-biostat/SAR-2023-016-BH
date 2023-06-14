@@ -1,16 +1,15 @@
-# Migration patterns in a cohort of individuals with brain injury in the US
+# Time-adjusted effect of socioeconomic status in mortality rates after brain injury: retrospective cohort
 
-1. To describe de mobility patterns when individuals in the cohort move neighborhoods;
-1. To describe the missingness in zip codes at each follow up collection;
-1. To impute missing Zip codes with data available in previous follow up collections.
+To determine the effect of socioeconomic status of the neighborhood on mortality of patients with brain injury, accounting for time-dependent covariates.
 
-<!-- Statistical Analysis for Brennan Hickson (US, 2023) -->
-Technical Report for Brennan Hickson (US, 2023)
+Statistical Analysis for Brennan Hickson (US, 2023)
+<!-- Technical Report for Brennan Hickson (US, 2023) -->
 
 ## Analyses performed
 
 1. Descriptive analysis
-1. Missing data imputation
+1. Inferential analysis
+1. Statistical models
 
 ## Documents
 
