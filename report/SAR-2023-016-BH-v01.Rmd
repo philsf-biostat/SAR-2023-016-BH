@@ -235,9 +235,77 @@ knitr::include_graphics("../figures/surv_uncrop.png", error = FALSE)
 
 ## Modeling strategy
 
-```{r A4, fig.cap="**Figure A4** Schoenfeld residuals for the full model."}
+### Approaches to control for time-dependent covariates
+
+#### Schoenfeld and Martingale residuals
+
+```{r A4, fig.cap="**Figure A4** caption"}
 # ![Age](../figures/distr_age.png)
-knitr::include_graphics("../figures/diag.png", error = FALSE)
+knitr::include_graphics("../figures/diag_full-sch.png", error = FALSE)
+```
+
+```{r A5, fig.cap="**Figure A5** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full-mar.png", error = FALSE)
+```
+
+#### Martingale residuals of covariates against the null model
+
+```{r A6, fig.cap="**Figure A6** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_null_cause-mar.png", error = FALSE)
+```
+
+```{r A7, fig.cap="**Figure A7** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_null-mar.png", error = FALSE)
+```
+
+#### Stratification by cause of injury
+
+```{r A8, fig.cap="**Figure A8** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_strat-sch.png", error = FALSE)
+```
+
+#### Time split
+
+```{r A9, fig.cap="**Figure A9** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full_split-sch.png", error = FALSE)
+```
+
+#### Non-linear fitting
+
+```{r A10, fig.cap="**Figure A10** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_poly-sch.png", error = FALSE)
+```
+
+```{r A11, fig.cap="**Figure A11** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_spline-sch.png", error = FALSE)
+```
+
+#### Interaction with time
+
+```{r A12, fig.cap="**Figure A12** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
+```
+
+#### FIM scores quartiles
+
+```{r A13, fig.cap="**Figure A13** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full_q-sch.png", error = FALSE)
+```
+
+### Final model specification
+
+```{r A14, fig.cap="**Figure A14** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_strat_q_nodays-sch.png", error = FALSE)
 ```
 
 ```{r tab_app}
