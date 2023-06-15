@@ -345,7 +345,7 @@ Notes:
 
 - removing days makes residuals appear PH (A14)
 - passes schoenfeld test
-- this is the new final model
+- final model: strat by cause + FIM quartiles + drop days
 
 ```{r tab_app}
 tab_app %>%
