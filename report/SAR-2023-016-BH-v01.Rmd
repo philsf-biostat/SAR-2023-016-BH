@@ -173,7 +173,7 @@ tab_inf %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, substance abuse, education, employment status, urbanization, spinal cord injury, rehabilitation payer, residence after rehab discharge, FIM scores quartiles and stratified by cause of injury."
+    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, rehabilitation payer, spinal cord injury, substance abuse, FIM scores quartiles, residence after rehab discharge, urbanization and stratified by cause of injury."
   )
 
 range_crude <- tab_inf$tbls[[1]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
