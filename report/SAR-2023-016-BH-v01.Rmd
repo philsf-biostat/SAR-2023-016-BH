@@ -174,21 +174,31 @@ range_adj   <- tab_inf$tbls[[2]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 ```
 
-After controlling for all relevant covariates, this effect can only be consistently detected for the distressed neighborhoods, that exhibit a
-`r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased
-risk of dying than prosperous neighborhoods
-(HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`,
-95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_2)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_2)`).
-The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`).
+After controlling for all relevant covariates, this effect starts to disappear.
+It can only be consistently detected after controlling for demographic variables in at-risk and distressed neighborhoods.
+Additionally controlling for clinical (model 3) and geographical covariates (model 4) all estimates converge towards the null hypothesis.
 
-When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range
-from `r range_late[1]` to `r range_late[2]`
-(which is an even narrower range than the crude estimates).
-The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power).
-The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods.
-In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of
-`r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR.
-It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates.
+Notes:
+
+- note drift of point estimates
+- note reliability of precision / CIs lengths don't change much
+- possible evidence of confounding of the effect, after controlling for clinical + geo
+
+<!-- for the distressed neighborhoods, that exhibit a -->
+<!-- `r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
+<!-- risk of dying than prosperous neighborhoods -->
+<!-- (HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`, -->
+<!-- 95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_2)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_2)`). -->
+<!-- The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`). -->
+
+<!-- When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range -->
+<!-- from `r range_late[1]` to `r range_late[2]` -->
+<!-- (which is an even narrower range than the crude estimates). -->
+<!-- The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power). -->
+<!-- The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods. -->
+<!-- In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of -->
+<!-- `r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR. -->
+<!-- It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates. -->
 
 # Observations and Limitations
 
@@ -206,7 +216,7 @@ The epidemiological profile of the study participant is an 31 years old white ma
 There appears to be a crude effect of SES on mortality, where participants that were discharged to either a comfortable or a distressed neighborhood had increased risk of death when compared to those discharged to a prosperous neighborhood.
 After controlling for other variables there is no association between SES and mortality.
 
-Both early deaths and late deaths appear to occur at similar rates across all neighborhoods.
+<!-- Both early deaths and late deaths appear to occur at similar rates across all neighborhoods. -->
 
 # References
 
@@ -235,10 +245,117 @@ knitr::include_graphics("../figures/surv_uncrop.png", error = FALSE)
 
 ## Modeling strategy
 
-```{r A4, fig.cap="**Figure A4** Schoenfeld residuals for the full model."}
+### Approaches to control for time-dependent covariates
+
+#### Schoenfeld and Martingale residuals
+
+```{r A4, fig.cap="**Figure A4** caption"}
 # ![Age](../figures/distr_age.png)
-knitr::include_graphics("../figures/diag.png", error = FALSE)
+knitr::include_graphics("../figures/diag_full-sch.png", error = FALSE)
 ```
+
+```{r A5, fig.cap="**Figure A5** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full-mar.png", error = FALSE)
+```
+
+Notes:
+
+- cause, days, fimmot and fimcog are time-dependent (fail schoenfeld test) (A4)
+- a few observations might be outliers, but do not appear to be influential (A5)
+
+#### Martingale residuals of covariates against the null model
+
+```{r A6, fig.cap="**Figure A6** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_null_cause-mar.png", error = FALSE)
+```
+
+```{r A7, fig.cap="**Figure A7** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_null-mar.png", error = FALSE)
+```
+
+Notes:
+
+- Cause has an extreme non-PH violation, falls are much higher risk (A6)
+- this justifies stratifying by Cause
+- individuals with lower days/fimmot/fimcog have higher non-PH risk (A7)
+- days is much worse than FIM scores (highly non-linear) (A7)
+
+#### Stratification by cause of injury
+
+```{r A8, fig.cap="**Figure A8** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_strat-sch.png", error = FALSE)
+```
+
+Notes:
+
+- stratifying by cause helps with non-PH of the 3 vars (A8)
+
+#### Time split
+
+```{r A9, fig.cap="**Figure A9** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full_split-sch.png", error = FALSE)
+```
+
+Notes:
+
+- time split at 1yr doesn't help further (A9)
+
+#### Non-linear fitting
+
+```{r A10, fig.cap="**Figure A10** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_poly-sch.png", error = FALSE)
+```
+
+```{r A11, fig.cap="**Figure A11** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_spline-sch.png", error = FALSE)
+```
+
+Notes:
+
+- polynomials (A10) and splines (A11) appear to help stabilize residuals, but not enough
+
+#### Interaction with time
+
+```{r A12, fig.cap="**Figure A12** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
+```
+
+Notes:
+
+- makes non-PH worse, not helpful at all (A12)
+
+#### FIM scores quartiles
+
+```{r A13, fig.cap="**Figure A13** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_full_q-sch.png", error = FALSE)
+```
+
+Notes:
+
+- days still non-PH (A13)
+- FIM scores seem PH enough (A13)
+
+### Final model specification
+
+```{r A14, fig.cap="**Figure A14** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/diag_strat_q_nodays-sch.png", error = FALSE)
+```
+
+Notes:
+
+- removing days makes residuals appear PH (A14)
+- passes schoenfeld test
+- final model: strat by cause + FIM quartiles + drop days
 
 ```{r tab_app}
 tab_app %>%
