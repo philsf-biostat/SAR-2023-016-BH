@@ -249,6 +249,11 @@ knitr::include_graphics("../figures/diag_full-sch.png", error = FALSE)
 knitr::include_graphics("../figures/diag_full-mar.png", error = FALSE)
 ```
 
+Notes:
+
+- cause, days, fimmot and fimcog are time-dependent (fail schoenfeld test) (A4)
+- a few observations might be outliers, but do not appear to be influential (A5)
+
 #### Martingale residuals of covariates against the null model
 
 ```{r A6, fig.cap="**Figure A6** caption"}
@@ -261,6 +266,13 @@ knitr::include_graphics("../figures/diag_null_cause-mar.png", error = FALSE)
 knitr::include_graphics("../figures/diag_null-mar.png", error = FALSE)
 ```
 
+Notes:
+
+- Cause has an extreme non-PH violation, falls are much higher risk (A6)
+- this justifies stratifying by Cause
+- individuals with lower days/fimmot/fimcog have higher non-PH risk (A7)
+- days is much worse than FIM scores (highly non-linear) (A7)
+
 #### Stratification by cause of injury
 
 ```{r A8, fig.cap="**Figure A8** caption"}
@@ -268,12 +280,20 @@ knitr::include_graphics("../figures/diag_null-mar.png", error = FALSE)
 knitr::include_graphics("../figures/diag_strat-sch.png", error = FALSE)
 ```
 
+Notes:
+
+- stratifying by cause helps with non-PH of the 3 vars (A8)
+
 #### Time split
 
 ```{r A9, fig.cap="**Figure A9** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_full_split-sch.png", error = FALSE)
 ```
+
+Notes:
+
+- time split at 1yr doesn't help further (A9)
 
 #### Non-linear fitting
 
@@ -287,12 +307,20 @@ knitr::include_graphics("../figures/diag_poly-sch.png", error = FALSE)
 knitr::include_graphics("../figures/diag_spline-sch.png", error = FALSE)
 ```
 
+Notes:
+
+- polynomials (A10) and splines (A11) appear to help stabilize residuals, but not enough
+
 #### Interaction with time
 
 ```{r A12, fig.cap="**Figure A12** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
 ```
+
+Notes:
+
+- makes non-PH worse, not helpful at all (A12)
 
 #### FIM scores quartiles
 
@@ -301,12 +329,23 @@ knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
 knitr::include_graphics("../figures/diag_full_q-sch.png", error = FALSE)
 ```
 
+Notes:
+
+- days still non-PH (A13)
+- FIM scores seem PH enough (A13)
+
 ### Final model specification
 
 ```{r A14, fig.cap="**Figure A14** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_strat_q_nodays-sch.png", error = FALSE)
 ```
+
+Notes:
+
+- removing days makes residuals appear PH (A14)
+- passes schoenfeld test
+- this is the new final model
 
 ```{r tab_app}
 tab_app %>%
