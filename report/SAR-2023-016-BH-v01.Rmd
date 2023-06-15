@@ -174,21 +174,31 @@ range_adj   <- tab_inf$tbls[[2]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 ```
 
-After controlling for all relevant covariates, this effect can only be consistently detected for the distressed neighborhoods, that exhibit a
-`r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased
-risk of dying than prosperous neighborhoods
-(HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`,
-95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_2)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_2)`).
-The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`).
+After controlling for all relevant covariates, this effect starts to disappear.
+It can only be consistently detected after controlling for demographic variables in at-risk and distressed neighborhoods.
+Additionally controlling for clinical (model 3) and geographical covariates (model 4) all estimates converge towards the null hypothesis.
 
-When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range
-from `r range_late[1]` to `r range_late[2]`
-(which is an even narrower range than the crude estimates).
-The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power).
-The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods.
-In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of
-`r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR.
-It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates.
+Notes:
+
+- note drift of point estimates
+- note reliability of precision / CIs lengths don't change much
+- possible evidence of confounding of the effect, after controlling for clinical + geo
+
+<!-- for the distressed neighborhoods, that exhibit a -->
+<!-- `r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
+<!-- risk of dying than prosperous neighborhoods -->
+<!-- (HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`, -->
+<!-- 95% CI = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.low_2)` to `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = conf.high_2)`). -->
+<!-- The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`). -->
+
+<!-- When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range -->
+<!-- from `r range_late[1]` to `r range_late[2]` -->
+<!-- (which is an even narrower range than the crude estimates). -->
+<!-- The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power). -->
+<!-- The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods. -->
+<!-- In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of -->
+<!-- `r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR. -->
+<!-- It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates. -->
 
 # Observations and Limitations
 
