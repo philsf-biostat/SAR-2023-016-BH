@@ -14,7 +14,7 @@ Nobs_model <- md %>% nrow()
 
 # raw estimate ------------------------------------------------------------
 
-mod.crude <- coxph(Surv(Time, outcome) ~ exposure, md)
+mod.crude <- coxph(Surv(Time, outcome) ~ exposure, md, id = id)
 
 # adjusted ----------------------------------------------------------------
 
@@ -33,7 +33,7 @@ mod.full <- coxph(Surv(Time, outcome) ~ exposure +
                     DAYStoREHABdc +
                     FIMMOTD +
                     FIMCOGD,
-                  md)
+                  md, id = id)
 
 # nested models -----------------------------------------------------------
 
@@ -46,22 +46,36 @@ mod.social <- update(mod.crude, . ~ .
                      + EMPLOYMENT
                      )
 
-# crude + social + clinical
-mod.social.clinical <- update(mod.social, . ~ .
-                              + strata(Cause)
-                              + RehabPay1
-                              + SCI
-                              + PROBLEMUse
-                              + FIMMOTD4
-                              + FIMCOGD4
-                              )
-
-# crude + social + clinical + geographical
-mod.final <- update(mod.social.clinical, . ~ .
+# crude + social + geographical
+mod.social.geo <- update(mod.social, . ~ .
                     + ResDis
                     + RURALdc
                     )
 
+# crude + social + geographical + clinical
+mod.social.geo.clinical <- update(mod.social.geo, . ~ .
+                       # + strata(Cause)
+                       + RehabPay1
+                       + SCI
+                       + PROBLEMUse
+                       + DAYStoREHABdc
+                       )
+# crude + social + geographical + clinical + FIM scores w/ interactions
+mod.final <- update(mod.social.geo.clinical, . ~ .
+                    # + strata(Cause)
+                    + FIMMOTD4
+                    + FIMCOGD4
+                    # + FIMMOTD4*exposure
+                    # + FIMCOGD4*exposure
+                    )
+
+mod.interaction <- update(mod.final, . ~ .
+                          # + strata(Cause)
+                          + FIMMOTD4*exposure
+                          + FIMCOGD4*exposure
+                          )
+  
+  
 # # add interaction terms to the model
 # mod.final <- update(mod.final, . ~ . + exposure*(RehabPay1 + RURALdc))
 
