@@ -55,23 +55,23 @@ tab_desc <- analytical %>%
 
 # table 2 -----------------------------------------------------------------
 
-model2 <- "Adjusted by demographic variables"
-model3 <- "Adjusted by demographic + geographical variables"
-model4 <- "Adjusted by demographic + geographical + clinical variables"
-model5 <- "Adjusted by demographic + geographical + clinical variables + FIM scores"
-model6 <- "Adjusted by demographic + geographical + clinical variables + FIM scores + Interactions"
+model2.lab <- "Adjusted by demographic variables"
+model3.lab <- "Adjusted by demographic + geographical variables"
+model4.lab <- "Adjusted by demographic + geographical + clinical variables"
+model5.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores"
+model6.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores + Interactions"
 
 tab_inf <- tbl_merge(
   tbls = list(
-    mod.crude %>% tab(conf.int = FALSE), # crude HR
-    mod.social %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model2), # aHR
-    mod.social.geo %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model3), # aHR
-    mod.social.geo.clinical %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4), # aHR
-    mod.final %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5), # aHR
-    mod.interaction %>% tab(conf.int = FALSE, include = c("exposure", "exposure:FIMMOTD4", "exposure:FIMCOGD4")) %>% modify_footnote(estimate ~ model6) # aHR
+    model1 %>% tab(conf.int = FALSE), # crude HR
+    model2 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model2.lab), # aHR
+    model3 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model3.lab), # aHR
+    model4 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4.lab), # aHR
+    model5 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5.lab), # aHR
+    model6 %>% tab(conf.int = FALSE, include = c("exposure", "exposure:FIMMOTD4", "exposure:FIMCOGD4")) %>% modify_footnote(estimate ~ model6.lab) # aHR
     # mod.late %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(update = list(estimate = "Test")) %>% bold_labels() %>% bold_p() # Late deaths
   ),
-  tab_spanner = c("Crude estimate", "Model 2", "Model 3", "Model 4")
+  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
 
 # table A1 ----------------------------------------------------------------
@@ -83,15 +83,15 @@ theme_gtsummary_compact()
 
 tab_app <- tbl_merge(
   tbls = list(
-    mod.crude %>% tab(include = everything()), # crude HR
-    mod.social %>% tab(include = everything()), # aHR
-    mod.social.geo %>% tab(include = everything()), # aHR
-    mod.social.geo.clinical %>% tab(include = everything()), # aHR
-    mod.final %>% tab(include = everything()), # aHR
-    mod.interaction %>% tab(include = everything())
+    model1 %>% tab(include = everything()), # crude HR
+    model2 %>% tab(include = everything()), # aHR
+    model3 %>% tab(include = everything()), # aHR
+    model4 %>% tab(include = everything()), # aHR
+    model5 %>% tab(include = everything()), # aHR
+    model6 %>% tab(include = everything())
     # mod.late %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p() # Late deaths
   ),
-  tab_spanner = c("Crude estimate", "Model 2", "Model 3", "Model 4")
+  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
 
 # revert theme to previous

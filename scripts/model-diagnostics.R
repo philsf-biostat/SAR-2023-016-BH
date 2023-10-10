@@ -467,4 +467,4 @@ anova(mod2.strat, mod2.strat.q)
 
 # validated model for SAR-2023-017-BH -------------------------------------
 
-update(mod.social.geo.clinical, . ~ . + FIMMOTD4 + FIMCOGD4)
+update(model4, . ~ . + FIMMOTD4 + FIMCOGD4)

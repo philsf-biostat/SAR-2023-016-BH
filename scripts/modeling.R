@@ -14,7 +14,7 @@ Nobs_model <- md %>% nrow()
 
 # raw estimate ------------------------------------------------------------
 
-mod.crude <- coxph(Surv(Time, outcome) ~ exposure, md, id = id)
+model1 <- coxph(Surv(Time, outcome) ~ exposure, md, id = id)
 
 # adjusted ----------------------------------------------------------------
 
@@ -38,7 +38,7 @@ mod.full <- coxph(Surv(Time, outcome) ~ exposure +
 # nested models -----------------------------------------------------------
 
 # crude + social
-mod.social <- update(mod.crude, . ~ .
+model2 <- update(model1, . ~ .
                      + SexF
                      + Race
                      + AGE
@@ -46,22 +46,22 @@ mod.social <- update(mod.crude, . ~ .
                      + EMPLOYMENT
                      )
 
-# crude + social + geographical
-mod.social.geo <- update(mod.social, . ~ .
+# model2 + geographical
+model3 <- update(model2, . ~ .
                     + ResDis
                     + RURALdc
                     )
 
-# crude + social + geographical + clinical
-mod.social.geo.clinical <- update(mod.social.geo, . ~ .
+# model3 + clinical
+model4 <- update(model3, . ~ .
                        # + strata(Cause)
                        + RehabPay1
                        + SCI
                        + PROBLEMUse
                        + DAYStoREHABdc
                        )
-# crude + social + geographical + clinical + FIM scores w/ interactions
-mod.final <- update(mod.social.geo.clinical, . ~ .
+# model4 + FIM scores w/ interactions
+model5 <- update(model4, . ~ .
                     # + strata(Cause)
                     + FIMMOTD4
                     + FIMCOGD4
@@ -69,7 +69,8 @@ mod.final <- update(mod.social.geo.clinical, . ~ .
                     # + FIMCOGD4*exposure
                     )
 
-mod.interaction <- update(mod.final, . ~ .
+# FIM interactions
+model6 <- update(model5, . ~ .
                           # + strata(Cause)
                           + FIMMOTD4*exposure
                           + FIMCOGD4*exposure
@@ -80,7 +81,7 @@ mod.interaction <- update(mod.final, . ~ .
 # mod.final <- update(mod.final, . ~ . + exposure*(RehabPay1 + RURALdc))
 
 # late deaths (over 1 year)
-mod.late <- update(mod.final, data = filter(md, Time > 1))
+# mod.late <- update(model6, data = filter(md, Time > 1))
 
 # predictions & curves ----------------------------------------------------
 
