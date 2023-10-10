@@ -23,29 +23,56 @@ theme_se <- list(
                        rlang::expr(gt::tab_style(style = "vertical-align:top", locations = gt::cells_body(columns = dplyr::any_of("label"))))
     )))
 
+tab <- function(model, include = "exposure", ...) {
+  model %>%
+    tbl_regression(
+      exp = TRUE,
+      include = include,
+      ...
+      ) %>%
+    bold_labels() %>%
+    bold_p()
+}
+
 # table 1 -----------------------------------------------------------------
 
 tab_desc <- analytical %>%
-  select(-FIMMOTD, -FIMCOGD,) %>%
+  filter(FollowUpPeriod==0) %>%
+  select(
+    -FIMMOTD,
+    -FIMCOGD,
+    -FollowUpPeriod,
+    -Time,
+    -outcome,
+  ) %>%
   tbl_summary(
     include = -id,
     # by = exposure,
+    missing_text = "Missing",
   ) %>%
   bold_labels() %>%
   modify_table_styling(columns = "label", align = "center")
 
 # table 2 -----------------------------------------------------------------
 
+model2.lab <- "Adjusted by demographic variables"
+model3.lab <- "Adjusted by demographic + geographical variables"
+model4.lab <- "Adjusted by demographic + geographical + clinical variables"
+model5.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores"
+model6.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores + Interactions"
+
 tab_inf <- tbl_merge(
   tbls = list(
-    mod.crude %>% tbl_regression(exp = TRUE, include = exposure) %>% bold_labels() %>% bold_p(), # crude HR
-    mod.social %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(estimate ~ "Adjusted by demographic variables") %>% bold_labels() %>% bold_p(), # aHR
-    mod.social.clinical %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(estimate ~ "Adjusted by demographic + clinical variables") %>% bold_labels() %>% bold_p(), # aHR
-    mod.final %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(estimate ~ "Adjusted by demographic + clinical + geographical variables") %>% bold_labels() %>% bold_p() # aHR
+    model1 %>% tab(conf.int = FALSE), # crude HR
+    model2 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model2.lab), # aHR
+    model3 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model3.lab), # aHR
+    model4 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4.lab), # aHR
+    model5 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5.lab), # aHR
+    model6 %>% tab(conf.int = FALSE, include = c("exposure", "exposure:FIMMOTD4", "exposure:FIMCOGD4")) %>% modify_footnote(estimate ~ model6.lab) # aHR
     # mod.late %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(update = list(estimate = "Test")) %>% bold_labels() %>% bold_p() # Late deaths
   ),
-  tab_spanner = c("Crude estimate", "Model 2", "Model 3", "Model 4")
-)
+  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
+  )
 
 # table A1 ----------------------------------------------------------------
 
@@ -56,14 +83,16 @@ theme_gtsummary_compact()
 
 tab_app <- tbl_merge(
   tbls = list(
-    mod.crude %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p(), # crude HR
-    mod.social %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p(), # aHR
-    mod.social.clinical %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p(), # aHR
-    mod.final %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p() # aHR
+    model1 %>% tab(include = everything()), # crude HR
+    model2 %>% tab(include = everything()), # aHR
+    model3 %>% tab(include = everything()), # aHR
+    model4 %>% tab(include = everything()), # aHR
+    model5 %>% tab(include = everything()), # aHR
+    model6 %>% tab(include = everything())
     # mod.late %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p() # Late deaths
   ),
-  tab_spanner = c("Crude estimate", "Model 2", "Model 3", "Model 4")
-)
+  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
+  )
 
 # revert theme to previous
 theme_ff_gtsummary()

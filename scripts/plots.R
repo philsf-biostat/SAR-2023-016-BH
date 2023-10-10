@@ -1,5 +1,7 @@
 # setup -------------------------------------------------------------------
 library(survminer)
+library(ggsurvfit)
+library(alluvial)
 
 ff.col <- "steelblue" # good for single groups scale fill/color brewer
 ff.pal <- "Paired"    # good for binary groups scale fill/color brewer
@@ -13,18 +15,33 @@ gg <- analytical %>%
 
 crop <- 0.5
 
+plot_data <- analytical %>%
+  select(Sex=SexF, SES=exposure, Death=outcome) %>%
+  table() %>%
+  as.data.frame()
+
 # plots -------------------------------------------------------------------
 
-gg.outcome <- gg +
-  geom_bar(
-    data = drop_na(analytical, exposure),
-    aes(exposure,
-        fill = factor(outcome, labels = c("Survived", "Death"))),
-    position = "fill") +
-  scale_y_continuous(labels = scales::label_percent()) +
-  xlab(attr(analytical$exposure, "label")) +
-  ylab("Mortality") +
-  labs(fill = "")
+# gg.outcome <- gg +
+#   geom_bar(
+#     data = drop_na(analytical, exposure),
+#     aes(exposure,
+#         fill = factor(outcome, labels = c("Survived", "Death"))),
+#     position = "fill") +
+#   scale_y_continuous(labels = scales::label_percent()) +
+#   xlab(attr(analytical$exposure, "label")) +
+#   ylab("Mortality") +
+#   labs(fill = "")
+
+# # this alluvial plot will be saved built in plots-save
+# png("figures/outcome.png")
+# alluvial(plot_data[, 1:3], freq=plot_data$Freq,
+#          col = ifelse(plot_data$Death == 1, "red", "grey"),
+#          border = ifelse(plot_data$Death == 1, "red", "grey"),
+#          #hide = plot_data$Freq == 0,
+#          cex = 0.7
+#          )
+# dev.off()
 
 gg.age <- gg +
   geom_density(
@@ -48,7 +65,7 @@ gg.ses <- gg +
 
 # survival curves ---------------------------------------------------------
 
-cxsf <- survfit(mod.final, newdata = newdat)
+cxsf <- survfit(model6, newdata = newdat)
 surv_cxsf <- surv_summary(cxsf, data = analytical) %>% tibble()
 m_newdat <- newdat[as.character(surv_cxsf$strata), ]
 
@@ -93,3 +110,13 @@ gg.surv.uncrop <- gg.surv +
 
 # # Schoenfeld residuals
 # ggcoxzph(cox.zph(mod.full), ggtheme = theme_ff(), font.main = 10)
+
+gg.cause <- update(mod.full, . ~ .
+                   -Cause
+                   + strata(Cause)
+                   # -FIMMOTD -FIMCOGD + FIMMOTD4 + FIMCOGD4
+                   ) %>%
+  survfit() %>%
+  ggsurvfit() +
+  theme_ff()
+gg.cause
