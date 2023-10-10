@@ -464,7 +464,3 @@ anova(mod.full, mod.full.q)
 anova(mod.strat, mod.strat.q)
 anova(mod.strat, mod.strat.q.nodays)
 anova(mod2.strat, mod2.strat.q)
-
-# validated model for SAR-2023-017-BH -------------------------------------
-
-update(model4, . ~ . + FIMMOTD4 + FIMCOGD4)
