@@ -12,9 +12,52 @@ library(labelled)
 study_period <- c("2010-01-01", "2018-12-31") %>%
   as.Date()
 
+model <- "single"
+# model <- "multiple"
+
 # data loading ------------------------------------------------------------
 set.seed(42)
-load(file = "dataset/brennan_data.rds")
+
+# Nobs_orig, Nvar_orig, Nid_orig
+load(file = "dataset/brennan_metadata.rds")
+
+print(model)
+
+# data.raw <- case_when(
+#   model == "single" ~
+#     # option 1: single observation data - original data
+#     read_rds("dataset/brennan_data_17.rds") %>%
+#     ungroup() %>%
+#     unnest(data) %>%
+#     filter(dataset=="cc") %>%
+#     select(-dataset),
+#   model == "multiple" ~
+#     # # option 2: multiple observations data, imputed
+#     read_rds("dataset/brennan_data_17.rds") %>%
+#     ungroup() %>%
+#     unnest(data) %>%
+#     filter(dataset=="locf") %>%
+#     select(-dataset),
+#   TRUE ~ stop("model definition must be single or multiple"),
+#   )
+
+if (model == "single") {
+
+  # option 1: single observation data - original data
+  data.raw <- read_rds("dataset/brennan_data_17.rds") %>%
+    ungroup() %>%
+    unnest(data) %>%
+    filter(dataset=="cc") %>%
+    select(-dataset)
+  } else {
+
+  # # option 2: multiple observations data, imputed
+  data.raw <- read_rds("dataset/brennan_data_17.rds") %>%
+    ungroup() %>%
+    unnest(data) %>%
+    filter(dataset=="locf") %>%
+    select(-dataset)
+  }
 
 # save labels before processing
 labs <- var_label(data.raw)
@@ -27,25 +70,42 @@ data.raw <- data.raw %>%
   ) %>%
   rename(
     id = Mod1id,
-    exposure = DCIQuintile,
+    # ## new varnames after manipulations in SAR-2023-017
+    # Date = Followup,
+    # Time_d = Time,
   ) %>%
   mutate(
-    # create new Date with either DeathF OR Followup - prioritize Deaths over Followup when both are present
-    Date = if_else(is.na(DeathF), Followup, DeathF),
-    # status at followup Date
-    outcome = as.numeric(!is.na(DeathF)), # 0=alive, 1=dead
-    # time to event (in days)
-    Time_d = as.duration(interval(RehabDis, Date)),
-    Time = Time_d/dyears(1),
+    # # create new Date with either DeathF OR Followup - prioritize Deaths over Followup when both are present
+    # Date = if_else(is.na(DeathF), Followup, DeathF),
+    # # status at followup Date
+    # outcome = as.numeric(!is.na(DeathF)), # 0=alive, 1=dead
+    # # time to event (in days)
+    # Time_d = as.duration(interval(RehabDis, Date)),
+    # Time = Time_d/dyears(1),
+    Time = Time/dyears(1),
   ) %>%
   filter(
   )
+
+# exposure at discharge for single observation model
+if (model == "single") {
+  data.raw <- data.raw %>%
+    mutate(
+      exposure = DCIQuintile_Dis,
+    )
+  }
 
 # rename selecting vars
 demographics <- str_replace(demographics, "Mod1id", "id")
 demographics <- str_replace(demographics, "DCIQuintile", "exposure")
 clinical <- str_replace(clinical, "Mod1id", "id")
 clinical <- str_replace(clinical, "DCIQuintile", "exposure")
+
+# inclusion criteria: select observations starting at discharge
+data.raw <- data.raw %>%
+  filter(
+    FollowUpPeriod >= 0 # Injury = -1, Discharge = 0
+  )
 
 # exclusion criteria: COVID is a possible confounder, use outcome Status Date to exclude
 data.raw <- data.raw %>%
@@ -63,12 +123,14 @@ data.raw <- data.raw %>%
   )
 
 # exclusion criteria: redundant participant observations: pick last date of follow up
-data.raw <- data.raw %>%
-  group_by(id) %>%
-  filter(
-    FollowUpPeriod == max(FollowUpPeriod, na.rm = TRUE),
-  ) %>%
-  ungroup()
+if (model == "single") {
+  data.raw <- data.raw %>%
+    group_by(id) %>%
+    filter(
+      FollowUpPeriod == max(FollowUpPeriod, na.rm = TRUE),
+    ) %>%
+    ungroup()
+  }
 
 # inclusion criteria: 10yr follow up + unique IDs
 Nobs_incl_id <- data.raw %>% nrow()
@@ -81,7 +143,7 @@ data.raw <- data.raw %>%
 
 # inclusion criteria: valid times
 data.raw <- data.raw %>%
-  filter(Time>0)
+  filter(Time>=0)
 
 # remove invalid observations (outcome at time 0 or below)
 Nobs_invalid <- data.raw %>% nrow()
@@ -136,6 +198,8 @@ data.raw <- data.raw %>%
     RehabPay1 = fct_relevel(RehabPay1, "Private Insurance"),
     EDUCATION = fct_relevel(EDUCATION, "Greater Than High School"),
     RURALdc = fct_relevel(RURALdc, "Suburban"),
+    # exposure = relevel(exposure, "Mid-Tier"),
+    # FIM quartiles
     FIMMOTD4 = cut(FIMMOTD, breaks = c(0, quantile(FIMMOTD, probs = c(.25, .50, .75), na.rm = TRUE), 100), labels = c("Q1", "Q2", "Q3", "Q4")), #, labels = c("Q1", "Q2", "Q3", "Q4"), right = FALSE
     FIMCOGD4 = cut(FIMCOGD, breaks = c(0, quantile(FIMCOGD, probs = c(.25, .50, .75), na.rm = TRUE), 100), labels = c("Q1", "Q2", "Q3", "Q4")),
   )
@@ -172,8 +236,10 @@ analytical <- data.raw %>%
     -starts_with("DCI"),
     -where(is.Date),
     -IntStatus,
-    -FollowUpPeriod,
-    -Time_d,
+    # -FollowUpPeriod,
+    # -Time_d,
+    # -FIMMOTF,
+    # -FIMCOGF,
   )
 
 Nvar_final <- analytical %>% ncol
