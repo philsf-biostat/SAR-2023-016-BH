@@ -13,25 +13,6 @@ md <- md %>%
     status2 = ifelse(Time >=cutpoint, outcome, 0),
   )
 
-# function to inspect Schoenfeld test
-sch <- function(x, sort = TRUE) {
-  if(class(x) != "cox.zph") stop("Not a Schoenfeld residuals object!")
-
-  x <- x$table %>% as.data.frame()
-
-  # sort p-values or identify terms
-  if(sort) {
-    x <- x %>%
-      arrange(p)
-  } else {
-    x <- x %>%
-      rownames_to_column(var = "term")
-  }
-
-  # format output
-  x %>% mutate(p = style_pvalue(p))
-}
-
 # diagnostics -------------------------------------------------------------
 
 # full model

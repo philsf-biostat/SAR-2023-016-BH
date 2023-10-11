@@ -12,6 +12,25 @@ md <- analytical %>%
   drop_na()
 Nobs_model <- md %>% nrow()
 
+# function to inspect Schoenfeld test
+sch <- function(x, sort = TRUE) {
+  if(class(x) != "cox.zph") stop("Not a Schoenfeld residuals object!")
+
+  x <- x$table %>% as.data.frame()
+
+  # sort p-values or identify terms
+  if(sort) {
+    x <- x %>%
+      arrange(p)
+  } else {
+    x <- x %>%
+      rownames_to_column(var = "term")
+  }
+
+  # format output
+  x %>% mutate(p = style_pvalue(p))
+}
+
 # raw estimate ------------------------------------------------------------
 
 model1 <- coxph(Surv(Time, outcome) ~ exposure, md, id = id)
