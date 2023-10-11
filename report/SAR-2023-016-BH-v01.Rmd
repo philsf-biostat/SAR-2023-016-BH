@@ -98,7 +98,7 @@ This analysis was performed using statistical software `R` version `r getRversio
 
 ## Study population and follow up
 
-There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nobs_orig_id)` study participants considered for inclusion.
+There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nid_orig)` study participants considered for inclusion.
 After excluding follow up measurements during the COVID-19 pandemic to mitigate confounding on mortality causes there were `r style_number(Nobs_incl_per)` observations left in the study sample.
 After applying the inclusion criteria for the study period between `r study_period[1]` and `r study_period[2]` and considering the status at the last available follow up time for each individual a total of `r style_number(Nobs_final)` participants were included in the analysis.
 
@@ -205,7 +205,7 @@ range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 <!-- Additionally controlling for clinical (model 3) and geographical covariates (model 4) all estimates converge towards the null hypothesis. -->
 
 <!-- for the distressed neighborhoods, that exhibit a -->
-<!-- `r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
+<!-- `r style_percent((exp(coef(model6)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
 <!-- risk of dying than prosperous neighborhoods -->
 <!-- (HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`, -->
 <!-- 95% CI = 
@@ -213,15 +213,6 @@ range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 to
 `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(conf.high) %>% style_number(2)`). -->
 <!-- The point estimates for all adjusted estimates of SES effect range from `r range_adj[1]` to `r range_adj[2]`, relative to the prosperous neighborhood, and that represents a narrower range of point estimates than the crude estimates (from `r range_crude[1]` to `r range_crude[2]`). -->
-
-<!-- When considering only late deaths the SES effect is not significantly associated with mortality, and estimates relative to a prosperous neighborhood range -->
-<!-- from `r range_late[1]` to `r range_late[2]` -->
-<!-- (which is an even narrower range than the crude estimates). -->
-<!-- The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power). -->
-<!-- The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods. -->
-<!-- In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of -->
-<!-- `r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR. -->
-<!-- It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates. -->
 
 # Observations and Limitations
 
@@ -384,7 +375,17 @@ Notes:
 - passes schoenfeld test
 - final model: strat by cause + FIM quartiles + drop days
 
-### After location/SES imputation
+<!-- ### After location/SES imputation -->
+
+### Schoenfeld test
+
+```{r}
+sch.df %>%
+  kable(
+    caption = "**Table A1** caption"
+  )
+```
+
 
 ### Final model specification
 
@@ -394,7 +395,7 @@ tab_app %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table A1** Alternative version of Table 2, showing effects from all covariates included in the models."
+    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in the models."
   )
 ```
 
@@ -427,11 +428,11 @@ This analysis is part of a larger project and is supported by other analyses, li
 
 ## Analytical dataset
 
-Table A2 shows the structure of the analytical dataset.
+Table A3 shows the structure of the analytical dataset.
 
 ```{r data}
 analytical_mockup %>%
-  pander(caption = "**Table A2** Analytical dataset structure", split.table = Inf)
+  pander(caption = "**Table A3** Analytical dataset structure", split.table = Inf)
 ```
 
 Due to confidentiality the data-set used in this analysis cannot be shared online in the public version of this report.

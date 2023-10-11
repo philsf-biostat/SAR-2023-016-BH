@@ -19,6 +19,8 @@ set.seed(42)
 
 # Nobs_orig, Nvar_orig, Nid_orig
 load(file = "dataset/brennan_metadata.rds")
+# original NVar *before* all manipulations in 017
+Nvar_orig <- 711
 
 print(model)
 

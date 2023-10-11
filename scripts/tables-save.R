@@ -69,7 +69,6 @@ tab_inf <- tbl_merge(
     model4 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4.lab), # aHR
     model5 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5.lab), # aHR
     model6 %>% tab(conf.int = FALSE, include = c("exposure", "exposure:FIMMOTD4", "exposure:FIMCOGD4")) %>% modify_footnote(estimate ~ model6.lab) # aHR
-    # mod.late %>% tbl_regression(exp = TRUE, include = exposure) %>% modify_footnote(update = list(estimate = "Test")) %>% bold_labels() %>% bold_p() # Late deaths
   ),
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
@@ -89,7 +88,6 @@ tab_app <- tbl_merge(
     model4 %>% tab(include = everything()), # aHR
     model5 %>% tab(include = everything()), # aHR
     model6 %>% tab(include = everything())
-    # mod.late %>% tbl_regression(exp = TRUE) %>% bold_labels() %>% bold_p() # Late deaths
   ),
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )

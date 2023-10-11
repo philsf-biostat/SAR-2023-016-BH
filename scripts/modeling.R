@@ -94,13 +94,6 @@ model6 <- update(model5, . ~ .
                           + FIMMOTD4*exposure
                           + FIMCOGD4*exposure
                           )
-  
-  
-# # add interaction terms to the model
-# mod.final <- update(mod.final, . ~ . + exposure*(RehabPay1 + RURALdc))
-
-# late deaths (over 1 year)
-# mod.late <- update(model6, data = filter(md, Time > 1))
 
 # Schoenfeld residuals of all models --------------------------------------
 
