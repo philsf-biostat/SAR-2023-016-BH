@@ -98,7 +98,7 @@ This analysis was performed using statistical software `R` version `r getRversio
 
 ## Study population and follow up
 
-There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nobs_orig_id)` study participants considered for inclusion.
+There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nid_orig)` study participants considered for inclusion.
 After excluding follow up measurements during the COVID-19 pandemic to mitigate confounding on mortality causes there were `r style_number(Nobs_incl_per)` observations left in the study sample.
 After applying the inclusion criteria for the study period between `r study_period[1]` and `r study_period[2]` and considering the status at the last available follow up time for each individual a total of `r style_number(Nobs_final)` participants were included in the analysis.
 
