@@ -384,7 +384,17 @@ Notes:
 - passes schoenfeld test
 - final model: strat by cause + FIM quartiles + drop days
 
-### After location/SES imputation
+<!-- ### After location/SES imputation -->
+
+### Schoenfeld test
+
+```{r}
+sch.df %>%
+  kable(
+    caption = "**Table A1** caption"
+  )
+```
+
 
 ### Final model specification
 
@@ -394,7 +404,7 @@ tab_app %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table A1** Alternative version of Table 2, showing effects from all covariates included in the models."
+    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in the models."
   )
 ```
 
@@ -427,11 +437,11 @@ This analysis is part of a larger project and is supported by other analyses, li
 
 ## Analytical dataset
 
-Table A2 shows the structure of the analytical dataset.
+Table A3 shows the structure of the analytical dataset.
 
 ```{r data}
 analytical_mockup %>%
-  pander(caption = "**Table A2** Analytical dataset structure", split.table = Inf)
+  pander(caption = "**Table A3** Analytical dataset structure", split.table = Inf)
 ```
 
 Due to confidentiality the data-set used in this analysis cannot be shared online in the public version of this report.
