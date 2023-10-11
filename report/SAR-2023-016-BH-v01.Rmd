@@ -205,7 +205,7 @@ range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 <!-- Additionally controlling for clinical (model 3) and geographical covariates (model 4) all estimates converge towards the null hypothesis. -->
 
 <!-- for the distressed neighborhoods, that exhibit a -->
-<!-- `r style_percent((exp(coef(mod.final)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
+<!-- `r style_percent((exp(coef(model6)["exposureDistressed"]) -1), symbol = TRUE)` increased -->
 <!-- risk of dying than prosperous neighborhoods -->
 <!-- (HR = `r inline_text(tab_inf, variable = exposure, level = "Distressed", column = estimate_2)`, -->
 <!-- 95% CI = 
@@ -220,7 +220,7 @@ to
 <!-- The adjusted estimates of all-time mortality can be compared with late mortality where in all neighborhoods the CI of the adjusted estimate is contained within the late death CI's, except for mid-tier and distressed neighborhoods that exceed the respective upper ranges of confidence by a diminute margin (presumably due to precision and study power). -->
 <!-- The respective point estimates in most cases do not change by a large amount, where most differences fall under 0.1 HR, with the exception of at-risk neighborhoods. -->
 <!-- In the latter both the difference and the CI indicate higher estimates which, although not consistently detectable, is in line with the crude estimate for these neighborhoods, which has a difference of -->
-<!-- `r style_number(abs(exp(coef(mod.final)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR. -->
+<!-- `r style_number(abs(exp(coef(model6)["exposureAt-Risk"]) - exp(coef(mod.late)["exposureAt-Risk"])), 2)` HR. -->
 <!-- It can be concluded that effect of SES on the risk of late death is not substantially different from all-time death in the study population, after controlling for all covariates. -->
 
 # Observations and Limitations
