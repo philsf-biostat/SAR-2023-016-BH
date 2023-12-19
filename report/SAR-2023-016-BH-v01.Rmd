@@ -146,13 +146,13 @@ This is the model that will be described in this section.
 The previous seizure disorder diagnosis was missing for most of the study population and was not included in the model as a covariate to preserve study power.
 After excluding participants with missing data from other variables a total of `r style_number(Nobs_model)` complete cases were available for analysis.
 The
-`r attr(analytical$DAYStoREHABdc, "label")`
-<!-- cause of injury -->
+<!-- `r attr(analytical$DAYStoREHABdc, "label")` -->
+cause of injury
 <!-- and -->
 <!-- both FIM scales -->
 <!-- were -->
 was
-removed from the model due to violations of the proportional hazards assumption (see section 8.2 in the appendix).
+removed from the model due to violations of the proportional hazards assumption (see section 8.2.1.1.3 in the appendix).
 
 The survival curves of both sexes by SES quintiles can be seen in Figure 2.
 Overall, the distressed neighborhoods appear to have a lower survival probability then other neighborhoods.
