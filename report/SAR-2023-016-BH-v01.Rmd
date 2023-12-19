@@ -139,16 +139,20 @@ knitr::include_graphics("../figures/outcome.png", error = FALSE)
 
 ## Time-adjusted effect of SES on mortality
 
+Following the findings of **SAR-2023-017-BH-v01** the multiple observations per individual should be favored where the time-varying SES exposure allows the full model specification in this analytical plan to be used.
+This analysis, however includes an additional model with interactions between the two FIM scores and the exposure that renders those findings obsolete, given that with this new specification all terms satisfy the proportional hazards assumption.
+This is the model that will be described in this section.
+
 The previous seizure disorder diagnosis was missing for most of the study population and was not included in the model as a covariate to preserve study power.
 After excluding participants with missing data from other variables a total of `r style_number(Nobs_model)` complete cases were available for analysis.
 The
-`r attr(analytical$DAYStoREHABdc, "label")`
-<!-- cause of injury -->
+<!-- `r attr(analytical$DAYStoREHABdc, "label")` -->
+cause of injury
 <!-- and -->
 <!-- both FIM scales -->
 <!-- were -->
 was
-removed from the model due to violations of the proportional hazards assumption (see section 8.2 in the appendix).
+removed from the model due to violations of the proportional hazards assumption (see section 8.2.1.1.3 in the appendix).
 
 The survival curves of both sexes by SES quintiles can be seen in Figure 2.
 Overall, the distressed neighborhoods appear to have a lower survival probability then other neighborhoods.
@@ -160,45 +164,52 @@ This plot was cropped at `r style_percent(crop, symbol = TRUE)` survival for pre
 knitr::include_graphics("../figures/surv.png", error = FALSE)
 ```
 
-When considering only the crude effect of SES on mortality neighborhood to which the individuals were discharged was associated with mortality (Table 2).
-~~Participants who were discharged to an at-risk neighborhood had increased chance of dying
-(HR = `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(estimate) %>% style_number(2)`,
-95% CI =
-`r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.low) %>% style_number(2)`
-to
-`r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.high) %>% style_number(2)`),
-when compared to those discharged to a prosperous neighborhood.~~
-Participants discharged to a distressed neighborhood also had a higher mortality risk
-(HR = `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`,
-95% CI =
-`r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`
-to
-`r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`),
-when compared to those discharged to a prosperous neighborhood.
+<!-- When considering only the crude effect of SES on mortality neighborhood to which the individuals were discharged was associated with mortality (Table 2). -->
+<!-- ~~Participants who were discharged to an at-risk neighborhood had increased chance of dying -->
+<!-- (HR = `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(estimate) %>% style_number(2)`, -->
+<!-- 95% CI = -->
+<!-- `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.low) %>% style_number(2)` -->
+<!-- to -->
+<!-- `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.high) %>% style_number(2)`), -->
+<!-- when compared to those discharged to a prosperous neighborhood.~~ -->
+<!-- Participants discharged to a distressed neighborhood also had a higher mortality risk -->
+<!-- (HR = `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`, -->
+<!-- 95% CI = -->
+<!-- `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)` -->
+<!-- to -->
+<!-- `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`), -->
+<!-- when compared to those discharged to a prosperous neighborhood. -->
 
-Notes:
+<!-- Notes: -->
 
-- ~~note drift of point estimates toward the null~~
-- note reliability of precision / CIs lengths don't change much
-- possible evidence of confounding of the effect, after controlling for clinical + geo
-- multiple: time-varying exposure is associated with the outcome up to model 5
-- interaction: association with FIMMOTD, but not FIMCOGD
-- interaction: direct association is lost when considering interactions (is it pulling the effect?)
-- 
+<!-- - ~~note drift of point estimates toward the null~~ -->
+<!-- - note reliability of precision / CIs lengths don't change much -->
+<!-- - possible evidence of confounding of the effect, after controlling for clinical + geo -->
+<!-- - multiple: time-varying exposure is associated with the outcome up to model 5 -->
+<!-- - interaction: association with FIMMOTD, but not FIMCOGD -->
+<!-- - interaction: direct association is lost when considering interactions (is it pulling the effect?) -->
+<!-- -  -->
+
+The effect of SES of the neighborhood to which the individuals were discharged was associated with mortality and it was modified by the `r attr(analytical$FIMMOTD4, "label")` (Table 2).
+No level of FIM motor function appears to be protective, but participants with the highest functional scores (within the fourth quartile) had a significant increased risk of dying in all neighborhoods, compared to the prosperous neighborhoods.
 
 ```{r tab_inf}
-tab_inf %>%
+# tab_inf %>%
+tab_m6 %>%
   as_kable(              # only for markdown
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, rehabilitation payer, spinal cord injury, substance abuse, FIM scores quartiles, residence after rehab discharge, urbanization and stratified by cause of injury."
+    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, residence after rehab discharge, urbanization, rehabilitation payer, spinal cord injury, substance abuse, days from injury to rehabe, FIM scores quartiles and interactions between FIM scores and the exposure."
   )
 
 range_crude <- tab_inf$tbls[[1]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 range_adj   <- tab_inf$tbls[[2]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 ```
+
+Additionally it appears that the risk of dying associated with the DCI in neighborhoods has a "U-shape", where "comfortable" and "distressed" locations show a higher incidence than both "mid-tier" and "at-risk" locations.
+This might indicate a more complex non-linear relationship between SES and FIM scores that could be evaluated in future studies. 
 
 <!-- The more variables are controlled for, the more this effect gradually disappears. -->
 <!-- It can only be consistently detected after controlling for demographic variables in at-risk and distressed neighborhoods. -->
@@ -227,8 +238,12 @@ All observational studies are recommended to be reported following the STROBE gu
 
 The epidemiological profile of the study participant is an 31 years old white male, that has greater than high school level of education, is actively employed and lives in an urban setting.
 
-There appears to be a crude effect of SES on mortality, where participants that were discharged to either a comfortable or a distressed neighborhood had increased risk of death when compared to those discharged to a prosperous neighborhood.
-After controlling for other variables there is no association between SES and mortality.
+<!-- There appears to be a crude effect of SES on mortality, where participants that were discharged to either a comfortable or a distressed neighborhood had increased risk of death when compared to those discharged to a prosperous neighborhood. -->
+After controlling for
+demographic, geographical, clinical variables and FIM scores
+SES is associated with an increased incidence of mortality
+when participants also have higher levels of motor function.
+This association holds regardless of what neighborhood participants were discharged to.
 
 <!-- Both early deaths and late deaths appear to occur at similar rates across all neighborhoods. -->
 
@@ -309,84 +324,89 @@ Notes:
 knitr::include_graphics("../figures/diag_strat-sch.png", error = FALSE)
 ```
 
+```{r A9, fig.cap="**Figure A9** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/cause.png", error = FALSE)
+```
+
 Notes:
 
-- stratifying by cause helps with non-PH of the 3 vars (A8)
+- stratifying by cause appears to help with non-PH of the 3 vars (A8)
+- cause violates the PH assumption (A9)
 
 ##### Time split
 
-```{r A9, fig.cap="**Figure A9** caption"}
+```{r A10, fig.cap="**Figure A10** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_full_split-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- time split at 1yr doesn't help further (A9)
+- time split at 1yr doesn't help further (A10)
 
 ##### Non-linear fitting
 
-```{r A10, fig.cap="**Figure A10** caption"}
+```{r A11, fig.cap="**Figure A11** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_poly-sch.png", error = FALSE)
 ```
 
-```{r A11, fig.cap="**Figure A11** caption"}
+```{r A12, fig.cap="**Figure A12** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_spline-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- polynomials (A10) and splines (A11) appear to help stabilize residuals, but not enough
+- polynomials (A11) and splines (A12) appear to help stabilize residuals, but not enough
 
 ##### Interaction with time
 
-```{r A12, fig.cap="**Figure A12** caption"}
+```{r A13, fig.cap="**Figure A13** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- makes non-PH worse, not helpful at all (A12)
+- makes non-PH worse, not helpful at all (A13)
 
 ##### FIM scores quartiles
 
-```{r A13, fig.cap="**Figure A13** caption"}
+```{r A14, fig.cap="**Figure A14** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_full_q-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- days still non-PH (A13)
-- FIM scores seem PH enough (A13)
+- days still non-PH (A14)
+- FIM scores seem PH enough (A14)
 
 #### Best model specification
 
-```{r A14, fig.cap="**Figure A14** caption"}
+```{r A15, fig.cap="**Figure A15** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_strat_q_nodays-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- removing days makes residuals appear PH (A14)
+- removing days makes residuals appear PH (A15)
 - passes schoenfeld test
 - final model: strat by cause + FIM quartiles + drop days
 
-<!-- ### After location/SES imputation -->
+#### After location/SES imputation
 
 ### Schoenfeld test
 
 ```{r}
 sch.df %>%
   kable(
-    caption = "**Table A1** caption"
+    caption = "**Table A1** P-values of the Schoenfeld test for all 6 models."
   )
 ```
-
 
 ### Final model specification
 
@@ -396,7 +416,7 @@ tab_app %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in the models."
+    caption = "**Table A2** Alternative version of Table 2, showing the coefficients from all covariates included in all 6 models."
   )
 ```
 
