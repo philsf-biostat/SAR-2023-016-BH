@@ -314,70 +314,76 @@ Notes:
 knitr::include_graphics("../figures/diag_strat-sch.png", error = FALSE)
 ```
 
+```{r A9, fig.cap="**Figure A9** caption"}
+# ![Age](../figures/distr_age.png)
+knitr::include_graphics("../figures/cause.png", error = FALSE)
+```
+
 Notes:
 
-- stratifying by cause helps with non-PH of the 3 vars (A8)
+- stratifying by cause appears to help with non-PH of the 3 vars (A8)
+- cause violates the PH assumption (A9)
 
 ##### Time split
 
-```{r A9, fig.cap="**Figure A9** caption"}
+```{r A10, fig.cap="**Figure A10** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_full_split-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- time split at 1yr doesn't help further (A9)
+- time split at 1yr doesn't help further (A10)
 
 ##### Non-linear fitting
 
-```{r A10, fig.cap="**Figure A10** caption"}
+```{r A11, fig.cap="**Figure A11** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_poly-sch.png", error = FALSE)
 ```
 
-```{r A11, fig.cap="**Figure A11** caption"}
+```{r A12, fig.cap="**Figure A12** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_spline-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- polynomials (A10) and splines (A11) appear to help stabilize residuals, but not enough
+- polynomials (A11) and splines (A12) appear to help stabilize residuals, but not enough
 
 ##### Interaction with time
 
-```{r A12, fig.cap="**Figure A12** caption"}
+```{r A13, fig.cap="**Figure A13** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_time-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- makes non-PH worse, not helpful at all (A12)
+- makes non-PH worse, not helpful at all (A13)
 
 ##### FIM scores quartiles
 
-```{r A13, fig.cap="**Figure A13** caption"}
+```{r A14, fig.cap="**Figure A14** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_full_q-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- days still non-PH (A13)
-- FIM scores seem PH enough (A13)
+- days still non-PH (A14)
+- FIM scores seem PH enough (A14)
 
 #### Best model specification
 
-```{r A14, fig.cap="**Figure A14** caption"}
+```{r A15, fig.cap="**Figure A15** caption"}
 # ![Age](../figures/distr_age.png)
 knitr::include_graphics("../figures/diag_strat_q_nodays-sch.png", error = FALSE)
 ```
 
 Notes:
 
-- removing days makes residuals appear PH (A14)
+- removing days makes residuals appear PH (A15)
 - passes schoenfeld test
 - final model: strat by cause + FIM quartiles + drop days
 
@@ -391,7 +397,6 @@ sch.df %>%
     caption = "**Table A1** caption"
   )
 ```
-
 
 ### Final model specification
 
