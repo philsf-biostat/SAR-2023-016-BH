@@ -7,6 +7,7 @@
 
 tab_inf <- read_rds("dataset/tab_inf_016.rds")
 tab_app <- read_rds("dataset/tab_app_016.rds")
+tab_m6 <- read_rds("dataset/tab_m6_016.rds")
 
 estimates <- bind_rows(
   mod1 = model1 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
