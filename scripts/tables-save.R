@@ -36,6 +36,7 @@ tab <- function(model, include = "exposure", ...) {
 
 # table 1 -----------------------------------------------------------------
 
+# requires manually disabling "filter(FollowUpPeriod != 0)" in input (exclusion criteria: redundant participant observations: pick last date of follow up)
 tab_desc <- analytical %>%
   filter(FollowUpPeriod==0) %>%
   select(
