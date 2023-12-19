@@ -164,21 +164,21 @@ This plot was cropped at `r style_percent(crop, symbol = TRUE)` survival for pre
 knitr::include_graphics("../figures/surv.png", error = FALSE)
 ```
 
-When considering only the crude effect of SES on mortality neighborhood to which the individuals were discharged was associated with mortality (Table 2).
-~~Participants who were discharged to an at-risk neighborhood had increased chance of dying
-(HR = `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(estimate) %>% style_number(2)`,
-95% CI =
-`r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.low) %>% style_number(2)`
-to
-`r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.high) %>% style_number(2)`),
-when compared to those discharged to a prosperous neighborhood.~~
-Participants discharged to a distressed neighborhood also had a higher mortality risk
-(HR = `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`,
-95% CI =
-`r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`
-to
-`r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`),
-when compared to those discharged to a prosperous neighborhood.
+<!-- When considering only the crude effect of SES on mortality neighborhood to which the individuals were discharged was associated with mortality (Table 2). -->
+<!-- ~~Participants who were discharged to an at-risk neighborhood had increased chance of dying -->
+<!-- (HR = `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(estimate) %>% style_number(2)`, -->
+<!-- 95% CI = -->
+<!-- `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.low) %>% style_number(2)` -->
+<!-- to -->
+<!-- `r estimates %>% filter(model== "mod1", term == "At-Risk") %>% pull(conf.high) %>% style_number(2)`), -->
+<!-- when compared to those discharged to a prosperous neighborhood.~~ -->
+<!-- Participants discharged to a distressed neighborhood also had a higher mortality risk -->
+<!-- (HR = `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`, -->
+<!-- 95% CI = -->
+<!-- `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)` -->
+<!-- to -->
+<!-- `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`), -->
+<!-- when compared to those discharged to a prosperous neighborhood. -->
 
 Notes:
 
