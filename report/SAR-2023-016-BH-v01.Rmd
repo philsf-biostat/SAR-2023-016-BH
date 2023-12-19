@@ -393,14 +393,14 @@ Notes:
 - passes schoenfeld test
 - final model: strat by cause + FIM quartiles + drop days
 
-<!-- ### After location/SES imputation -->
+#### After location/SES imputation
 
 ### Schoenfeld test
 
 ```{r}
 sch.df %>%
   kable(
-    caption = "**Table A1** caption"
+    caption = "**Table A1** P-values of the Schoenfeld test for all 6 models."
   )
 ```
 
@@ -412,7 +412,7 @@ tab_app %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in all 6 models."
+    caption = "**Table A2** Alternative version of Table 2, showing the coefficients from all covariates included in all 6 models."
   )
 ```
 
