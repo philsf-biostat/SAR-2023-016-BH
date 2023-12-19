@@ -59,9 +59,13 @@ source("scripts/input.R", encoding = 'UTF-8')
 # Abbreviations
 
 - FIM: Functional Independence Measure
+- CI: confidence interval
+- DCI: Distress community index
 - HR: hazards ratio
+- LOCF: Last observation carried forward
 - SD: standard deviation
 - SES: socioeconomic status
+- TBI: Traumatic brain injury
 
 # Context
 
@@ -166,7 +170,9 @@ This is a retrospective analysis of a prospective cohort study.
 1. Participants with at most 10 years of follow up;
 1. Participants included in the cohort between `r study_period[1]` and `r study_period[2]`;
 1. Only the last valid observation of each individual will be included in the analysis
-1. Participants with non-negative time under observation.
+1. Participants with non-negative time under observation*.
+
+* this criterion will be treated specially in this analysis (see section 5.1.4).
 
 **Exclusion criteria**
 
@@ -257,8 +263,8 @@ Time-dependent covariates that fail these approaches will be removed before the 
 
 ### Missing data
 
-No missing data imputation will be performed.
-All evaluations will be performed as complete case analyses.
+A simple imputation using an LOCF approach will be used on zip codes prior to merging the SES.
+All data cleaning procedures, as well as the details of the missing data imputation were performed and are described in **SAP-2023-017-BH-v02**.
 Missing data counts and proportions will be reported in tables.
 
 ## Significance and Confidence Intervals
@@ -290,6 +296,7 @@ All observational studies are recommended to be reported following the STROBE gu
 
 - **SAR-2023-016-BH-v01** -- Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study
 - **SAR-2023-017-BH-v01** -- Sensitivity of mortality rates to the imputation of missing socioeconomic data: cohort study
+- **SAP-2023-017-BH-v02** -- Analytical Plan for Sensitivity of mortality rates to the imputation of missing socioeconomic data: cohort study
 <!-- - Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd Ed.). New York: Routledge. -->
 - Zarin DA, et al. The ClinicalTrials.gov results database -- update and key issues. N Engl J Med 2011;364:852-60 (<https://doi.org/10.1056/NEJMsa1012065>).
 - Gamble C, et al. Guidelines for the Content of Statistical Analysis Plans in Clinical Trials. JAMA. 2017;318(23):2337–2343 (<https://doi.org/10.1001/jama.2017.18556>).
