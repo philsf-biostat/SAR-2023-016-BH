@@ -406,7 +406,7 @@ tab_app %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in the models."
+    caption = "**Table A2** Alternative version of Table 2, showing effects from all covariates included in all 6 models."
   )
 ```
 
