@@ -23,7 +23,7 @@ theme_se <- list(
                        rlang::expr(gt::tab_style(style = "vertical-align:top", locations = gt::cells_body(columns = dplyr::any_of("label"))))
     )))
 
-tab <- function(model, include = "exposure", ...) {
+tab <- function(model, include = contains("exposure"), ...) {
   model %>%
     tbl_regression(
       exp = TRUE,
@@ -69,7 +69,7 @@ tab_inf <- tbl_merge(
     model3 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model3.lab), # aHR
     model4 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4.lab), # aHR
     model5 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5.lab), # aHR
-    model6 %>% tab(conf.int = FALSE, include = c("exposure", "exposure:FIMMOTD4", "exposure:FIMCOGD4")) %>% modify_footnote(estimate ~ model6.lab) # aHR
+    model6 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model6.lab)  # aHR
   ),
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
