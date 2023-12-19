@@ -43,7 +43,7 @@ panderOptions('table.split.table', 160)
 
 ```{r history}
 Version <- c("01", "02")
-Changes <- c("Initial version", "imputation + time-varying SES")
+Changes <- c("Initial version", "Imputation + time-varying SES")
 history <- cbind(Version, Changes)
 colnames(history) <- c("Version", "Alterations")
 # pander(history, split.cells = 70)
@@ -59,9 +59,13 @@ source("scripts/input.R", encoding = 'UTF-8')
 # Abbreviations
 
 - FIM: Functional Independence Measure
+- CI: confidence interval
+- DCI: Distress community index
 - HR: hazards ratio
+- LOCF: Last observation carried forward
 - SD: standard deviation
 - SES: socioeconomic status
+- TBI: Traumatic brain injury
 
 # Context
 
@@ -90,42 +94,8 @@ variables collected on
 observations from
 `r Nid_orig` individuals.
 
-<!-- Upon study start the raw data will be collected in a raw table, that will be processed before analysis. -->
-<!-- The raw dataset to be collected will have -->
-<!-- `r Nvar_orig` -->
-<!-- variables collected on -->
-<!-- `r Nobs_orig` -->
-<!-- observations. -->
-
-<!-- This dataset will include the dates of entry and exit of the cohort, or the date of hospital admission and the date where the endpoint was reached (either an event, or hospital discharge). -->
-<!-- Table 1 shows the structure of the raw dataset. -->
-
-<!-- ```{r analytical data} -->
-<!-- analytical_mockup %>% -->
-<!--   pander(caption = "**Table 1** Raw dataset structure.") -->
-<!-- ``` -->
-
-<!-- Each row represents all information collected from each study participant, and each participant included will require a unique study ID. -->
-<!-- The outcome should be recorded as a binary variable: either the study participant reached the endpoint -->
-<!-- ([outcome]) -->
-<!-- or reached the end of study period without experiencing the event. -->
-<!-- This information can be recorded in either text form (eg, yes/no), or an indicator -->
-<!-- ([outcome] = 1, -->
-<!-- end of observation time or discharge = 0). -->
-<!-- Exposure and all comorbidities should be recorded as binary variables, whenever possible. -->
-<!-- All comorbidities should be recorded as binary variables, whenever possible. -->
-
-<!-- Surgery length should be recorded in -->
-<!-- minutes, -->
-<!-- hours, -->
-<!-- and ICU length in -->
-<!-- days. -->
-<!-- weeks. -->
-<!-- months. -->
-
-<!-- Surgery type will be recorded as a categorical variable. -->
-<!-- It is recommended that the number of classes (types of surgery) be as small as possible, to avoid loss of precision in the analysis estimates, without the need to increase the sample size. -->
-<!-- Broader categories of surgeries should be preferred, whenever possible. -->
+Following the findings of **SAR-2023-017-BH-v01** the multiple observations per individual should be favored where the time-varying SES exposure allows the full model specification in this analytical plan to be used.
+The raw data for this analysis was prepared and procedures were described in that document, as well as its accompanying analysis plan (**SAP-2023-017-BH-v02**).
 
 ## Analytical dataset
 
@@ -163,14 +133,17 @@ This is a retrospective analysis of a prospective cohort study.
 
 **Inclusion criteria**
 
-- Participants with at most 10 years of follow up;
-- Participants included in the cohort between `r study_period[1]` and `r study_period[2]`.
-- Participants with non-negative time under observation.
+1. Participants with at most 10 years of follow up;
+1. Participants included in the cohort between `r study_period[1]` and `r study_period[2]`;
+1. Only the last valid observation of each individual will be included in the analysis
+1. Participants with non-negative time under observation*.
+
+* this criterion will be treated specially in this analysis (see section 5.1.4).
 
 **Exclusion criteria**
 
-Observations after 2019-12-31 will be excluded in order to mitigate risk of confounding by COVID-19 related deaths.
-Observations prior to this date will still be considered for participants where such data is available.
+1. Observations after 2019-12-31 will be excluded in order to mitigate risk of confounding by COVID-19 related deaths.
+1. Observations prior to this date will still be considered for participants where such data is available.
 
 ## Exposures
 
@@ -256,8 +229,8 @@ Time-dependent covariates that fail these approaches will be removed before the 
 
 ### Missing data
 
-No missing data imputation will be performed.
-All evaluations will be performed as complete case analyses.
+A simple imputation using an LOCF approach will be used on zip codes prior to merging the SES.
+All data cleaning procedures, as well as the details of the missing data imputation were performed and are described in **SAP-2023-017-BH-v02**.
 Missing data counts and proportions will be reported in tables.
 
 ## Significance and Confidence Intervals
@@ -288,6 +261,8 @@ All observational studies are recommended to be reported following the STROBE gu
 # References
 
 - **SAR-2023-016-BH-v01** -- Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study
+- **SAR-2023-017-BH-v01** -- Sensitivity of mortality rates to the imputation of missing socioeconomic data: cohort study
+- **SAP-2023-017-BH-v02** -- Analytical Plan for Sensitivity of mortality rates to the imputation of missing socioeconomic data: cohort study
 <!-- - Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd Ed.). New York: Routledge. -->
 - Zarin DA, et al. The ClinicalTrials.gov results database -- update and key issues. N Engl J Med 2011;364:852-60 (<https://doi.org/10.1056/NEJMsa1012065>).
 - Gamble C, et al. Guidelines for the Content of Statistical Analysis Plans in Clinical Trials. JAMA. 2017;318(23):2337–2343 (<https://doi.org/10.1001/jama.2017.18556>).
