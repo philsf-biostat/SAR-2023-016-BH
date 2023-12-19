@@ -2,7 +2,7 @@
 title: "Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study"
 subtitle: 'DOCUMENT: SAR-2023-016-BH-v01'
 author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
-date: "`r Sys.Date()`"
+date: "2023-12-19"
 output:
   html_document:
     fig_caption: yes
@@ -123,7 +123,7 @@ tab_desc %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 1** Epidemiological, demographic and clinical characteristics of study participants."
+    caption = "**Table 1** Epidemiological, demographic and clinical characteristics of study participants at the time of discharge."
   )
 ```
 
@@ -200,7 +200,7 @@ tab_m6 %>%
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, residence after rehab discharge, urbanization, rehabilitation payer, spinal cord injury, substance abuse, days from injury to rehabe, FIM scores quartiles and interactions between FIM scores and the exposure."
+    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, residence after rehab discharge, urbanization, rehabilitation payer, spinal cord injury, substance abuse, days from injury to rehab, FIM scores quartiles and interactions between FIM scores and the exposure."
   )
 
 range_crude <- tab_inf$tbls[[1]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
@@ -236,7 +236,7 @@ All observational studies are recommended to be reported following the STROBE gu
 
 # Conclusions
 
-The epidemiological profile of the study participant is an 31 years old white male, that has greater than high school level of education, is actively employed and lives in an urban setting.
+The epidemiological profile of the study participant is a 31 years old white male, that has greater than high school level of education, is actively employed and lives in an urban setting.
 
 <!-- There appears to be a crude effect of SES on mortality, where participants that were discharged to either a comfortable or a distressed neighborhood had increased risk of death when compared to those discharged to a prosperous neighborhood. -->
 After controlling for

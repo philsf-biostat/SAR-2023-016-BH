@@ -74,6 +74,9 @@ tab_inf <- tbl_merge(
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
 
+# simplified version of T2
+tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
+
 # table A1 ----------------------------------------------------------------
 
 # use SE instead of CI
@@ -102,4 +105,4 @@ theme_gtsummary_compact()
 write_rds(tab_desc, "dataset/tab_desc_016.rds")
 write_rds(tab_inf, "dataset/tab_inf_016.rds")
 write_rds(tab_app, "dataset/tab_app_016.rds")
-model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab) %>% write_rds("dataset/tab_m6_016.rds")
+tab_m6 %>% write_rds("dataset/tab_m6_016.rds")
