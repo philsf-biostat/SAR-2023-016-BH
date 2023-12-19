@@ -126,6 +126,9 @@ data.raw <- data.raw %>%
 # exclusion criteria: redundant participant observations: pick last date of follow up
 if (model == "single") {
   data.raw <- data.raw %>%
+    # observation at discharge is obsolete for the non TDC model
+    filter(FollowUpPeriod != 0) %>%
+    # remove all followups but the last
     group_by(id) %>%
     filter(
       FollowUpPeriod == max(FollowUpPeriod, na.rm = TRUE),
