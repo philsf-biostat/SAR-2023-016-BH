@@ -46,17 +46,17 @@ if (model == "single") {
 
   # option 1: single observation data - original data
   data.raw <- read_rds("dataset/brennan_data_17.rds") %>%
-    ungroup() %>%
-    unnest(data) %>%
     filter(dataset=="cc") %>%
+    unnest(data) %>%
+    ungroup() %>%
     select(-dataset)
   } else {
 
   # # option 2: multiple observations data, imputed
   data.raw <- read_rds("dataset/brennan_data_17.rds") %>%
-    ungroup() %>%
-    unnest(data) %>%
     filter(dataset=="locf") %>%
+    unnest(data) %>%
+    ungroup() %>%
     select(-dataset)
   }
 
