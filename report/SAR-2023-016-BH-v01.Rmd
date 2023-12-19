@@ -208,6 +208,9 @@ range_adj   <- tab_inf$tbls[[2]]$table_body$estimate %>% range(na.rm = TRUE) %>%
 range_late  <- tab_inf$tbls[[3]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
 ```
 
+Additionally it appears that the risk of dying associated with the DCI in neighborhoods has a "U-shape", where "comfortable" and "distressed" locations show a higher incidence than both "mid-tier" and "at-risk" locations.
+This might indicate a more complex non-linear relationship between SES and FIM scores that could be evaluated in future studies. 
+
 <!-- The more variables are controlled for, the more this effect gradually disappears. -->
 <!-- It can only be consistently detected after controlling for demographic variables in at-risk and distressed neighborhoods. -->
 <!-- Additionally controlling for clinical (model 3) and geographical covariates (model 4) all estimates converge towards the null hypothesis. -->
