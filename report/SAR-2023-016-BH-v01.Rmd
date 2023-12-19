@@ -139,6 +139,10 @@ knitr::include_graphics("../figures/outcome.png", error = FALSE)
 
 ## Time-adjusted effect of SES on mortality
 
+Following the findings of **SAR-2023-017-BH-v01** the multiple observations per individual should be favored where the time-varying SES exposure allows the full model specification in this analytical plan to be used.
+This analysis, however includes an additional model with interactions between the two FIM scores and the exposure that renders those findings obsolete, given that with this new specification all terms satisfy the proportional hazards assumption.
+This is the model that will be described in this section.
+
 The previous seizure disorder diagnosis was missing for most of the study population and was not included in the model as a covariate to preserve study power.
 After excluding participants with missing data from other variables a total of `r style_number(Nobs_model)` complete cases were available for analysis.
 The
@@ -187,12 +191,13 @@ Notes:
 - 
 
 ```{r tab_inf}
-tab_inf %>%
+# tab_inf %>%
+tab_m6 %>%
   as_kable(              # only for markdown
   # as_flex_table(       # only for DOCX
   # ) %>%
   # flextable::set_caption(
-    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, rehabilitation payer, spinal cord injury, substance abuse, FIM scores quartiles, residence after rehab discharge, urbanization and stratified by cause of injury."
+    caption = "**Table 2** Effect of SES on mortality; HR estimates were adjusted for sex, race, age, education, employment status, rehabilitation payer, spinal cord injury, substance abuse, FIM scores quartiles, residence after rehab discharge, urbanization and interactions with FIM scores."
   )
 
 range_crude <- tab_inf$tbls[[1]]$table_body$estimate %>% range(na.rm = TRUE) %>% style_number(2)
