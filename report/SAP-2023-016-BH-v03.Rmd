@@ -163,9 +163,10 @@ This is a retrospective analysis of a prospective cohort study.
 
 **Inclusion criteria**
 
-- Participants with at most 10 years of follow up;
-- Participants included in the cohort between `r study_period[1]` and `r study_period[2]`.
-- Participants with non-negative time under observation.
+1. Participants with at most 10 years of follow up;
+1. Participants included in the cohort between `r study_period[1]` and `r study_period[2]`;
+1. Only the last valid observation of each individual will be included in the analysis
+1. Participants with non-negative time under observation.
 
 **Exclusion criteria**
 
