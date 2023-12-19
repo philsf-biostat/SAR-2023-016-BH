@@ -1,8 +1,8 @@
 ---
 title: "Analytical Plan for Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study"
-subtitle: 'DOCUMENT: SAP-2023-016-BH-v01'
+subtitle: 'DOCUMENT: SAP-2023-016-BH-v03'
 author: '**From:** Felipe Figueiredo **To:** Brennan Hickson'
-date: "2023-05-26"
+date: "2023-09-01"
 output:
   html_document:
     fig_caption: yes
@@ -23,7 +23,15 @@ output:
 # toc-title: "Sumário"
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+options(scipen = 999)
+library(pander)
+library(knitr)
+panderOptions('table.style', 'rmarkdown')
+panderOptions('table.split.table', 160)
+```
 
 ---
 
@@ -33,12 +41,18 @@ output:
 
 **Document version**
 
+```{r history}
+Version <- c("01", "02", "03")
+Changes <- c("Initial version", "imputation + time-varying SES", "FIM in separate model with interactions")
+history <- cbind(Version, Changes)
+colnames(history) <- c("Version", "Alterations")
+# pander(history, split.cells = 70)
+kable(history)
+```
 
-|Version |Alterations     |
-|:-------|:---------------|
-|01      |Initial version |
-
-
+```{r cleaning, include=FALSE}
+source("scripts/input.R", encoding = 'UTF-8')
+```
 
 ---
 
@@ -70,17 +84,17 @@ The clinical and followup tables were merged by study ID, and this was joined wi
 <!-- To maximize the availability of SES data, this was also assumed for each follow up location, where the preferred information used was the zip code at discharge, when available. -->
 
 The original data base had
-711
+`r Nvar_orig`
 variables collected on
-76665
+`r Nobs_orig`
 observations from
-19303 individuals.
+`r Nid_orig` individuals.
 
 <!-- Upon study start the raw data will be collected in a raw table, that will be processed before analysis. -->
 <!-- The raw dataset to be collected will have -->
-<!-- 711 -->
+<!-- `r Nvar_orig` -->
 <!-- variables collected on -->
-<!-- 76665 -->
+<!-- `r Nobs_orig` -->
 <!-- observations. -->
 
 <!-- This dataset will include the dates of entry and exit of the cohort, or the date of hospital admission and the date where the endpoint was reached (either an event, or hospital discharge). -->
@@ -121,18 +135,21 @@ Most of the categorical variables were measured with many levels that were conde
 The quartiles for each of the both FIM scores were calculated for each individual and saved as two separate variables as covariates for the analysis.
 
 <!-- After the cleaning process -->
-<!-- 23 -->
+<!-- `r Nvar_final` -->
 <!-- variables were included in the analysis -->
 <!-- with -->
-<!-- 7978 -->
+<!-- `r Nobs_final` -->
 <!-- observations. -->
 After the cleaning process
-23
+`r Nvar_final`
 variables were included in the analysis.
 The total number of observations excluded due to incompleteness and exclusion criteria will be reported in the analysis.
 <!-- Table 1 shows the structure of the analytical dataset. -->
 
-
+```{r analytical data}
+# analytical_mockup %>%
+#   pander(caption = "**Table 1** Analytical dataset structure after variable selection and cleaning.")
+```
 
 All variables in the analytical set were labeled according to the raw data provided and values were labeled according to the data dictionary for the preparation of production-quality results tables and figures.
 
@@ -147,7 +164,7 @@ This is a retrospective analysis of a prospective cohort study.
 **Inclusion criteria**
 
 - Participants with at most 10 years of follow up;
-- Participants included in the cohort between 2010-01-01 and 2018-12-31.
+- Participants included in the cohort between `r study_period[1]` and `r study_period[2]`.
 - Participants with non-negative time under observation.
 
 **Exclusion criteria**
@@ -257,7 +274,7 @@ N/A
 
 ## Statistical packages
 
-This analysis will be performed using statistical software `R` version 4.3.0.
+This analysis will be performed using statistical software `R` version `r getRversion()`.
 
 # Observations and limitations
 

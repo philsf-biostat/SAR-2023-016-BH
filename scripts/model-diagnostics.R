@@ -13,25 +13,6 @@ md <- md %>%
     status2 = ifelse(Time >=cutpoint, outcome, 0),
   )
 
-# function to inspect Schoenfeld test
-sch <- function(x, sort = TRUE) {
-  if(class(x) != "cox.zph") stop("Not a Schoenfeld residuals object!")
-
-  x <- x$table %>% as.data.frame()
-
-  # sort p-values or identify terms
-  if(sort) {
-    x <- x %>%
-      arrange(p)
-  } else {
-    x <- x %>%
-      rownames_to_column(var = "term")
-  }
-
-  # format output
-  x %>% mutate(p = style_pvalue(p))
-}
-
 # diagnostics -------------------------------------------------------------
 
 # full model
@@ -73,18 +54,18 @@ res.null.m <- resid(mod.null, type = "martingale")
 # Martingale: covariates against null -------------------------------------
 
 png("figures/diag_null_cause-mar.png", h = h, w = h)
-plot(md$Cause, res.null.m, ylab = "Martingale residuals")
+plot(md$Cause, res.null.m, ylab = "Martingale residuals", xlab = "Cause")
 lines(lowess(md$Cause, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 dev.off()
 
 png("figures/diag_null-mar.png", h = h, w = 3*w)
 par(mfrow = c(1,3))
-plot(md$DAYStoREHABdc, res.null.m, ylab = "Martingale residuals")
+plot(md$DAYStoREHABdc, res.null.m, ylab = "Martingale residuals", xlab = "DAYStoREHABdc")
 lines(lowess(md$DAYStoREHABdc, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 # abline(v = 30, lty = 2, lwd = 2) # non-linear peak
-plot(md$FIMMOTD, res.null.m, ylab = "Martingale residuals")
+plot(md$FIMMOTD, res.null.m, ylab = "Martingale residuals", xlab = "FIMMOTD")
 lines(lowess(md$FIMMOTD, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
-plot(md$FIMCOGD, res.null.m, ylab = "Martingale residuals")
+plot(md$FIMCOGD, res.null.m, ylab = "Martingale residuals", xlab = "FIMCOGD")
 lines(lowess(md$FIMCOGD, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 # identify(res.null.m)
 dev.off()
@@ -405,13 +386,13 @@ dev.off()
 
 png("figures/diag_null_q-mar.png", h = 2*h, w = 2*w)
 par(mfrow = c(2,2))
-plot(md$FIMMOTD, res.null.m, ylab = "Martingale residuals")
+plot(md$FIMMOTD, res.null.m, ylab = "Martingale residuals", xlab = "FIMMOTD")
 lines(lowess(md$FIMMOTD, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
-plot(md$FIMCOGD, res.null.m, ylab = "Martingale residuals")
+plot(md$FIMCOGD, res.null.m, ylab = "Martingale residuals", xlab = "FIMCOGD")
 lines(lowess(md$FIMCOGD, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
-plot(md$FIMMOTD4, res.null.m, ylab = "Martingale residuals", xlab = "md$FIMMOTD4")
+plot(md$FIMMOTD4, res.null.m, ylab = "Martingale residuals", xlab = "FIMMOTD4")
 lines(lowess(md$FIMMOTD4, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
-plot(md$FIMCOGD4, res.null.m, ylab = "Martingale residuals", xlab = "md$FIMCOGD4")
+plot(md$FIMCOGD4, res.null.m, ylab = "Martingale residuals", xlab = "FIMCOGD4")
 lines(lowess(md$FIMCOGD4, res.null.m, iter = 0), lty = 2, col = "blue", lwd = 2)
 # identify(res.null.m)
 dev.off()
