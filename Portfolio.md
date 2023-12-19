@@ -1,6 +1,6 @@
 ---
 title: 'Time-adjusted effect of socioeconomic status in mortality rates after brain injury: cohort study'
-date: ""
+date: "2023-12-19"
 permalink: /portfolio/SAR-2023-016/
 redirect_from:
   - /portfolio/SAR-2023-016-BH/
