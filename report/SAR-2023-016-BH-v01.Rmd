@@ -180,15 +180,18 @@ knitr::include_graphics("../figures/surv.png", error = FALSE)
 <!-- `r estimates %>% filter(model== "mod1", term == "Distressed") %>% pull(estimate) %>% style_number(2)`), -->
 <!-- when compared to those discharged to a prosperous neighborhood. -->
 
-Notes:
+<!-- Notes: -->
 
-- ~~note drift of point estimates toward the null~~
-- note reliability of precision / CIs lengths don't change much
-- possible evidence of confounding of the effect, after controlling for clinical + geo
-- multiple: time-varying exposure is associated with the outcome up to model 5
-- interaction: association with FIMMOTD, but not FIMCOGD
-- interaction: direct association is lost when considering interactions (is it pulling the effect?)
-- 
+<!-- - ~~note drift of point estimates toward the null~~ -->
+<!-- - note reliability of precision / CIs lengths don't change much -->
+<!-- - possible evidence of confounding of the effect, after controlling for clinical + geo -->
+<!-- - multiple: time-varying exposure is associated with the outcome up to model 5 -->
+<!-- - interaction: association with FIMMOTD, but not FIMCOGD -->
+<!-- - interaction: direct association is lost when considering interactions (is it pulling the effect?) -->
+<!-- -  -->
+
+The effect of SES of the neighborhood to which the individuals were discharged was associated with mortality and it was modified by the `r attr(analytical$FIMMOTD4, "label")` (Table 2).
+No level of FIM motor function appears to be protective, but participants with the highest functional scores (within the fourth quartile) had a significant increased risk of dying in all neighborhoods, compared to the prosperous neighborhoods.
 
 ```{r tab_inf}
 # tab_inf %>%
