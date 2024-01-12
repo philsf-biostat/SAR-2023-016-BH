@@ -88,6 +88,10 @@ data.raw <- data.raw %>%
   filter(
   )
 
+# manual fixes
+# ids with a wrong FU session indicator
+data.raw[data.raw$id%in%c(14785, 7131 ) & data.raw$FollowUpPeriod==15, ]$FollowUpPeriod <- c(2, 1)
+
 # exposure at discharge for single observation model
 if (model == "single") {
   data.raw <- data.raw %>%
