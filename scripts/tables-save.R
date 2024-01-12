@@ -79,6 +79,14 @@ tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
 
 # table A1 ----------------------------------------------------------------
 
+tab_mar_hr <- tbl_merge(
+  list(
+    model6.mar2 %>% tab(include = everything()),
+    model6.mar3 %>% tab(include = everything())
+  ),
+  c("Mar2", "Mar3")
+)
+
 # use SE instead of CI
 # theme_gtsummary_journal("qjecon")
 set_gtsummary_theme(theme_se)
@@ -94,14 +102,6 @@ tab_app <- tbl_merge(
     model6 %>% tab(include = everything())
   ),
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
-  )
-
-tab_mar_hr <- tbl_merge(
-  list(
-    model6.mar2 %>% tab(include = everything()),
-    model6.mar3 %>% tab(include = everything())
-  ),
-  c("Mar2", "Mar3")
   )
 
 # revert theme to previous
