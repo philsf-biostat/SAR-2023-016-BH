@@ -97,6 +97,14 @@ tab_app <- tbl_merge(
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
 
+tab_mar_hr <- tbl_merge(
+  list(
+    model6.mar2 %>% tab(include = everything()),
+    model6.mar3 %>% tab(include = everything())
+  ),
+  c("Mar2", "Mar3")
+  )
+
 # revert theme to previous
 theme_ff_gtsummary()
 theme_gtsummary_compact()

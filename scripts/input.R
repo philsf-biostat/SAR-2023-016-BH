@@ -210,6 +210,11 @@ data.raw <- data.raw %>%
     # FIM quartiles
     FIMMOTD4 = cut(FIMMOTD, breaks = c(0, quantile(FIMMOTD, probs = c(.25, .50, .75), na.rm = TRUE), 100), labels = c("Q1", "Q2", "Q3", "Q4")), #, labels = c("Q1", "Q2", "Q3", "Q4"), right = FALSE
     FIMCOGD4 = cut(FIMCOGD, breaks = c(0, quantile(FIMCOGD, probs = c(.25, .50, .75), na.rm = TRUE), 100), labels = c("Q1", "Q2", "Q3", "Q4")),
+    # aggregate Mar into broader categories
+    # option 1
+    Mar2 = fct_collapse(Mar, Single = "Single (Never Married)", Married = "Married", Sep = c("Divorced", "Separated"), Other = c("Widowed", "Other")),
+    # option 2
+    Mar3 = fct_other(Mar, keep = c("Single (Never Married)", "Married")),
   )
 
 # labels ------------------------------------------------------------------

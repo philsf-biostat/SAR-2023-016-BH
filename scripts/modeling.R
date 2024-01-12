@@ -145,3 +145,28 @@ newdat <- expand.grid(
   RehabPay1 = "Private Insurance"
   )
 rownames(newdat) <- letters[1:10]
+
+# Mar models --------------------------------------------------------------
+
+model6.mar1 <- model6 %>% update(.~. +Mar )
+model6.mar2 <- model6 %>% update(.~. +Mar2)
+model6.mar3 <- model6 %>% update(.~. +Mar3)
+
+model6.mar1.sch <- model6.mar1 %>% cox.zph()
+model6.mar2.sch <- model6.mar2 %>% cox.zph()
+model6.mar3.sch <- model6.mar3 %>% cox.zph()
+
+tab.mar <- bind_rows(
+  Mar1 = sch(model6.mar1.sch, sort = FALSE),
+  Mar2 = sch(model6.mar2.sch, sort = FALSE),
+  Mar3 = sch(model6.mar3.sch, sort = FALSE),
+  .id = "model",
+) %>%
+  select(-chisq, -df) %>%
+  pivot_wider(names_from = term, values_from = p) %>%
+  as.matrix() %>%
+  t() %>%
+  as.data.frame()
+colnames(tab.mar) <- tab.mar[1, ]
+tab.mar <- tab.mar[-1, ]
+tab.mar <- tab.mar %>% rownames_to_column("term")
