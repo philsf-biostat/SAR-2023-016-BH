@@ -52,8 +52,7 @@ tab_desc <- analytical %>%
     # by = exposure,
     missing_text = "Missing",
   ) %>%
-  bold_labels() %>%
-  modify_table_styling(columns = "label", align = "center")
+  bold_labels()
 
 # table 2 -----------------------------------------------------------------
 
