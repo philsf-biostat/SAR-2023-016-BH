@@ -148,7 +148,7 @@ rownames(newdat) <- letters[1:10]
 
 # Mar models --------------------------------------------------------------
 
-model6.mar1 <- model6 %>% update(.~. +Mar )
+model6.mar1 <- model6 %>% update(.~. +Mar ) %>% suppressWarnings()
 model6.mar2 <- model6 %>% update(.~. +Mar2)
 model6.mar3 <- model6 %>% update(.~. +Mar3)
 
