@@ -38,7 +38,8 @@ tab <- function(model, include = contains("exposure"), ...) {
 
 # requires manually disabling "filter(FollowUpPeriod != 0)" in input (exclusion criteria: redundant participant observations: pick last date of follow up)
 tab_desc <- analytical %>%
-  filter(FollowUpPeriod==0) %>%
+  # # get data at baseline (only for "multiple")
+  # filter(FollowUpPeriod==0) %>%
   select(
     -FIMMOTD,
     -FIMCOGD,
@@ -51,8 +52,7 @@ tab_desc <- analytical %>%
     # by = exposure,
     missing_text = "Missing",
   ) %>%
-  bold_labels() %>%
-  modify_table_styling(columns = "label", align = "center")
+  bold_labels()
 
 # table 2 -----------------------------------------------------------------
 
@@ -78,6 +78,14 @@ tab_inf <- tbl_merge(
 tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
 
 # table A1 ----------------------------------------------------------------
+
+tab_mar_hr <- tbl_merge(
+  list(
+    model6.mar2 %>% tab(include = everything()),
+    model6.mar3 %>% tab(include = everything())
+  ),
+  c("Mar2", "Mar3")
+)
 
 # use SE instead of CI
 # theme_gtsummary_journal("qjecon")
@@ -106,3 +114,4 @@ write_rds(tab_desc, "dataset/tab_desc_016.rds")
 write_rds(tab_inf, "dataset/tab_inf_016.rds")
 write_rds(tab_app, "dataset/tab_app_016.rds")
 tab_m6 %>% write_rds("dataset/tab_m6_016.rds")
+tab_mar_hr %>% write_rds("dataset/tab_mar_016.rds")
