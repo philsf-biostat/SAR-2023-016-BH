@@ -1,0 +1,3 @@
+[submodule "report/script-brennan"]
+	path = report/script-brennan
+	url = git@github.com:BrennanHickson/TBIMS-Survival-by-DCI.git

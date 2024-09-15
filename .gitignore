@@ -284,3 +284,5 @@ flycheck_*.el
 # dataset is private and cannot be publicly versioned
 dataset/
 dataset
+data
+script-brennan/
