@@ -87,10 +87,10 @@ tab_mar_hr <- tbl_merge(
   c("Mar2", "Mar3")
 )
 
-# use SE instead of CI
-# theme_gtsummary_journal("qjecon")
-set_gtsummary_theme(theme_se)
-theme_gtsummary_compact()
+# # use SE instead of CI
+# # theme_gtsummary_journal("qjecon")
+# set_gtsummary_theme(theme_se)
+# theme_gtsummary_compact()
 
 tab_app <- tbl_merge(
   tbls = list(
@@ -104,9 +104,9 @@ tab_app <- tbl_merge(
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
   )
 
-# revert theme to previous
-theme_ff_gtsummary()
-theme_gtsummary_compact()
+# # revert theme to previous
+# theme_ff_gtsummary()
+# theme_gtsummary_compact()
 
 # save tables -------------------------------------------------------------
 

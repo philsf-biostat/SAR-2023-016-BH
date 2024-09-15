@@ -98,24 +98,6 @@ This analysis was performed using statistical software `R` version `r getRversio
 
 ## Study population and follow up
 
-There initially were `r style_number(Nobs_orig)` observations on `r style_number(Nid_orig)` study participants considered for inclusion.
-After excluding follow up measurements during the COVID-19 pandemic to mitigate confounding on mortality causes there were `r style_number(Nobs_incl_per)` observations left in the study sample.
-After applying the inclusion criteria for the study period between `r study_period[1]` and `r study_period[2]` and considering the status at the last available follow up time for each individual a total of `r style_number(Nobs_final)` participants were included in the analysis.
-
-The epidemiological profile of the participant included in the study was a
-male participant (`r inline_text(tab_desc, variable = SexF, level = "Male")`)
-with an average (SD) age of `r inline_text(tab_desc, variable = AGE)` years.
-<!-- The average (SD) time of follow up was -->
-<!-- `r style_number(mean(analytical$Time, na.rm=TRUE), 2)` -->
-<!-- (`r style_number(sd(analytical$Time, na.rm=TRUE), 2)`) -->
-<!-- years. -->
-
-Races were not homogeneously available in the study population with
-`r inline_text(tab_desc, variable = Race, level = "White")` individuals being white;
-`r inline_text(tab_desc, variable = Mar, level = "Single (Never Married)")` were single (never married) at the time of injury,
-and most participants were well educated with `r inline_text(tab_desc, variable = EDUCATION, level = "Greater Than High School")` at greater than high school level.
-A total of `r inline_text(tab_desc, variable = EMPLOYMENT, level = "Employed")` were employed and
-`r inline_text(tab_desc, variable = RURALdc, level = "Urban")` participants lived in an urban area.
 
 ```{r tab_desc}
 tab_desc %>%
