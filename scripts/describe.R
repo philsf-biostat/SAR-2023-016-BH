@@ -6,7 +6,8 @@ library(gt)
 
 # setup gtsummary theme
 
-theme_ff_gtsummary()
+# theme_ff_gtsummary()
+theme_gtsummary_mean_sd()
 theme_gtsummary_compact()
 # theme_gtsummary_language(language = "pt") # traduzir
 
