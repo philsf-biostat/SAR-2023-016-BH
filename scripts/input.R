@@ -11,8 +11,8 @@ library(labelled)
 study_period <- c("2010-01-01", "2018-12-31") %>%
   as.Date()
 
-model <- "single"
-# model <- "multiple"
+# model <- "single"
+model <- "multiple"
 
 # data loading ------------------------------------------------------------
 set.seed(42)

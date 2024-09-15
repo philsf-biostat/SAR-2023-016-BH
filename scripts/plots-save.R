@@ -28,3 +28,6 @@ alluvial(plot_data[, 1:3], freq=plot_data$Freq,
          cex = 0.7
 )
 dev.off()
+
+gg.model6 <- model6 %>% tbl_regression(exp=TRUE, include = contains("exposure")) %>% plot()
+ggsave(filename = "figures/model6_multi.png", plot = gg.model6, height = 18, width = 18, units = units)
