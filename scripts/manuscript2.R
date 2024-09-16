@@ -42,16 +42,8 @@ tab_inf <- tbl_merge(
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
 )
 
-tab_inf %>% as_gt() %>% gtsave("figures/model6_multi_tab.png")
-
-tab_inf %>%
-  as_gt() %>%
-  as_rtf() %>%
-  writeLines(con = "report/SAR-2023-016-BH-v03-T2.rtf")
-
 # New gtsumary feature: plot
 gg.model6 <- model6 %>% tbl_regression(exp=TRUE, include = contains("exposure")) %>% plot()
-ggsave(filename = "figures/model6_multi.png", plot = gg.model6, height = 18, width = 18, units = "cm")
 
 # Table App ---------------------------------------------------------------
 
@@ -67,7 +59,18 @@ tab_app <- tbl_merge(
   tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
 )
 
-tab_app %>%
-  as_gt() %>%
-  as_rtf() %>%
-  writeLines(con = "report/SAR-2023-016-BH-v03-Tapp.rtf")
+# save to  disk -----------------------------------------------------------
+
+# tab_inf %>% as_gt() %>% gtsave("figures/model6_multi_tab.png")
+# 
+# tab_inf %>%
+#   as_gt() %>%
+#   as_rtf() %>%
+#   writeLines(con = "report/SAR-2023-016-BH-v03-T2.rtf")
+# 
+# ggsave(filename = "figures/model6_multi.png", plot = gg.model6, height = 18, width = 18, units = "cm")
+# 
+# tab_app %>%
+#   as_gt() %>%
+#   as_rtf() %>%
+#   writeLines(con = "report/SAR-2023-016-BH-v03-Tapp.rtf")
