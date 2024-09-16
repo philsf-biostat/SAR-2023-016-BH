@@ -23,10 +23,10 @@ md %>% distinct(id) %>% nrow() %>% print()
 md %>% filter(outcome==1) %>% nrow() %>%  print()
 
 paste0(
-  "N=", md %>% nrow(),
-  " observations on ", md %>% distinct(id) %>% nrow(),
-  " participants,",
-  " with ", md %>% filter(outcome==1) %>% nrow(), " events")
+  "N=", md %>% nrow(), " observations on ",
+  md %>% distinct(id) %>% nrow(), " participants,",
+  " with ", md %>% filter(outcome==1) %>% nrow(), " events") %>%
+  print()
 
 # Table 2 -----------------------------------------------------------------
 
