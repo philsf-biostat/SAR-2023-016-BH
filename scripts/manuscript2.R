@@ -8,11 +8,25 @@ model4.lab <- "Adjusted by demographic + geographical + clinical variables"
 model5.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores"
 model6.lab <- "Adjusted by demographic + geographical + clinical variables + FIM scores + Interactions"
 
+# run analysis ------------------------------------------------------------
+
 source('scripts/input.R', encoding = 'UTF-8') |> suppressMessages()
 # source("scripts/input-brennan.R")
 source('scripts/describe.R', encoding = 'UTF-8') |> suppressMessages()
 source('scripts/modeling.R', encoding = 'UTF-8') |> suppressMessages()
 source('scripts/inference.R', encoding = 'UTF-8') |> suppressMessages()
+
+# participant & event counts ----------------------------------------------
+
+md %>% nrow() %>% print()
+md %>% distinct(id) %>% nrow() %>% print()
+md %>% filter(outcome==1) %>% nrow() %>%  print()
+
+paste0(
+  "N=", md %>% nrow(),
+  " observations on ", md %>% distinct(id) %>% nrow(),
+  " participants,",
+  " with ", md %>% filter(outcome==1) %>% nrow(), " events")
 
 # Table 2 -----------------------------------------------------------------
 
