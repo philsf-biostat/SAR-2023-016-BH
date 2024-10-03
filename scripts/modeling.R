@@ -36,7 +36,7 @@ sch <- function(x, sort = TRUE) {
 # model1 = crude
 formula1 <- formula(Surv(Time, outcome) ~ exposure)
 
-# model2 = crude + social
+# model2 = model1 + social
 formula2 <- formula(. ~ .
                     + SexF
                     + Race
@@ -78,6 +78,7 @@ formula6 <- formula(. ~ .
 
 # raw estimate ------------------------------------------------------------
 
+# model1 = crude
 model1 <- coxph(formula1, md, id = id)
 
 # adjusted ----------------------------------------------------------------
@@ -101,18 +102,19 @@ mod.full <- coxph(Surv(Time, outcome) ~ exposure +
 
 # nested models -----------------------------------------------------------
 
-# crude + social
+# model2 = model1 + social
 model2 <- update(model1, formula2)
 
-# model2 + geographical
+# model3 = model2 + geographical
 model3 <- update(model2, formula3)
 
-# model3 + clinical
+# model4 = model3 + clinical
 model4 <- update(model3, formula4)
-# model4 + FIM scores w/ interactions
+
+# model5 = model4 + FIM scores
 model5 <- update(model4, formula5)
 
-# FIM interactions
+# model6 = model5 + FIM interactions
 model6 <- update(model5, formula6)
 
 # Schoenfeld residuals of all models --------------------------------------
