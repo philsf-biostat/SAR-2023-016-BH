@@ -208,4 +208,93 @@ rownames(newdat) <- letters[1:10]
 # tab.mar <- tab.mar[-1, ]
 # tab.mar <- tab.mar %>% rownames_to_column("term")
 
+# time-dependent ----------------------------------------------------------
 
+# time split (years)
+cutpoint <- 1
+
+md2 <- md %>%
+  mutate(
+    status1 = ifelse(Time < cutpoint, outcome, 0),
+    status2 = ifelse(Time >=cutpoint, outcome, 0),
+  )
+
+model1.1 <- coxph(Surv(Time, status1) ~ exposure, md2)
+model1.2 <- coxph(Surv(Time, status2) ~ exposure, md2)
+
+model2.1 <- update(model1.1, formula2)
+model2.2 <- update(model1.2, formula2)
+
+model3.1 <- update(model2.1, formula3)
+model3.2 <- update(model2.2, formula3)
+
+model4.1 <- update(model3.1, formula4)
+model4.2 <- update(model3.2, formula4)
+
+model5.1 <- update(model4.1, formula5)
+model5.2 <- update(model4.2, formula5)
+
+model1.1.sch <- model1.1 %>% cox.zph()
+model1.2.sch <- model1.2 %>% cox.zph()
+model2.1.sch <- model2.1 %>% cox.zph()
+model2.2.sch <- model2.2 %>% cox.zph()
+model3.1.sch <- model3.1 %>% cox.zph()
+model3.2.sch <- model3.2 %>% cox.zph()
+model4.1.sch <- model4.1 %>% cox.zph()
+model4.2.sch <- model4.2 %>% cox.zph()
+model5.1.sch <- model5.1 %>% cox.zph()
+model5.2.sch <- model5.2 %>% cox.zph()
+
+sch.df1 <- bind_rows(
+  model1.1 = sch(model1.1.sch, sort = FALSE),
+  model2.1 = sch(model2.1.sch, sort = FALSE),
+  model3.1 = sch(model3.1.sch, sort = FALSE),
+  model4.1 = sch(model4.1.sch, sort = FALSE),
+  model5.1 = sch(model5.1.sch, sort = FALSE),
+  # model6 = sch(model6.sch, sort = FALSE),
+  .id = "model",
+) %>%
+  select(-chisq, -df) %>%
+  pivot_wider(names_from = term, values_from = p) %>%
+  as.matrix() %>%
+  t() %>%
+  as.data.frame()
+colnames(sch.df1) <- sch.df1[1, ]
+sch.df1 <- sch.df1[-1, ]
+sch.df1 <- sch.df1 %>% rownames_to_column("term")
+
+sch.df2 <- bind_rows(
+  model1.2 = sch(model1.2.sch, sort = FALSE),
+  model2.2 = sch(model2.2.sch, sort = FALSE),
+  model3.2 = sch(model3.2.sch, sort = FALSE),
+  model4.2 = sch(model4.2.sch, sort = FALSE),
+  model5.2 = sch(model5.2.sch, sort = FALSE),
+  # model6 = sch(model6.sch, sort = FALSE),
+  .id = "model",
+) %>%
+  select(-chisq, -df) %>%
+  pivot_wider(names_from = term, values_from = p) %>%
+  as.matrix() %>%
+  t() %>%
+  as.data.frame()
+colnames(sch.df2) <- sch.df2[1, ]
+sch.df2 <- sch.df2[-1, ]
+sch.df2 <- sch.df2 %>% rownames_to_column("term")
+
+# obsolete tdc ------------------------------------------------------------
+
+# md2 <- tmerge(md, md, id=id,
+#               dstat=event(Time, outcome),
+#               FIMMOT = tdc(FIMMOTD),
+#               FIMCOG = tdc(FIMCOGD)
+#               ) %>% tibble()
+# 
+# survSplit(formula(model5), md, id="id", cut = c(0, .3)) %>% tibble()
+# 
+# md3 <- survSplit(Surv(Time, outcome)~., md, cut = c(0, 1)) %>% tibble()
+# 
+# # coxph()
+# model6 <- update(model5, data=md3)
+# model6.sch <- cox.zph(model6)
+# 
+# model6.sch %>% sch()
