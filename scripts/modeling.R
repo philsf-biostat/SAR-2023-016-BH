@@ -83,22 +83,22 @@ model1 <- coxph(formula1, md, id = id)
 
 # adjusted ----------------------------------------------------------------
 
-mod.full <- coxph(Surv(Time, outcome) ~ exposure +
-                    SexF +
-                    Race +
-                    AGE +
-                    PROBLEMUse +
-                    EDUCATION +
-                    EMPLOYMENT +
-                    RURALdc +
-                    SCI +
-                    Cause +
-                    RehabPay1 +
-                    ResDis +
-                    DAYStoREHABdc +
-                    FIMMOTD +
-                    FIMCOGD,
-                  md, id = id)
+# mod.full <- coxph(Surv(Time, outcome) ~ exposure +
+#                     SexF +
+#                     Race +
+#                     AGE +
+#                     PROBLEMUse +
+#                     EDUCATION +
+#                     EMPLOYMENT +
+#                     RURALdc +
+#                     SCI +
+#                     Cause +
+#                     RehabPay1 +
+#                     ResDis +
+#                     DAYStoREHABdc +
+#                     FIMMOTD +
+#                     FIMCOGD,
+#                   md, id = id)
 
 # nested models -----------------------------------------------------------
 
@@ -114,8 +114,20 @@ model4 <- update(model3, formula4)
 # model5 = model4 + FIM scores
 model5 <- update(model4, formula5)
 
-# model6 = model5 + FIM interactions
-model6 <- update(model5, formula6)
+# # model6 = model5 + FIM interactions
+# model6 <- update(model5, formula6)
+
+# # model6 = model5 + FIM interactions
+# model6 <- update(model5, . ~ .
+#                           # + strata(Cause)
+#                           # + FIMMOTD4*exposure
+#                           # + FIMCOGD4*exposure
+#                           - FIMMOTD
+#                           - FIMCOGD
+#                           + tt(FIMMOTD)
+#                           + tt(FIMCOGD)
+#                  , tt = function(x, t, ...) x*log(t+.5)
+#                           )
 
 # Schoenfeld residuals of all models --------------------------------------
 
@@ -124,7 +136,7 @@ model2.sch <- cox.zph(model2)
 model3.sch <- cox.zph(model3)
 model4.sch <- cox.zph(model4)
 model5.sch <- cox.zph(model5)
-model6.sch <- cox.zph(model6)
+# model6.sch <- cox.zph(model6)
 
 sch.df <- bind_rows(
   model1 = sch(model1.sch, sort = FALSE),
@@ -132,7 +144,7 @@ sch.df <- bind_rows(
   model3 = sch(model3.sch, sort = FALSE),
   model4 = sch(model4.sch, sort = FALSE),
   model5 = sch(model5.sch, sort = FALSE),
-  model6 = sch(model6.sch, sort = FALSE),
+  # model6 = sch(model6.sch, sort = FALSE),
   .id = "model",
 ) %>%
   select(-chisq, -df) %>%
@@ -173,25 +185,27 @@ rownames(newdat) <- letters[1:10]
 
 # Mar models --------------------------------------------------------------
 
-model6.mar1 <- model6 %>% update(.~. +Mar ) %>% suppressWarnings()
-model6.mar2 <- model6 %>% update(.~. +Mar2)
-model6.mar3 <- model6 %>% update(.~. +Mar3)
+# model6.mar1 <- model6 %>% update(.~. +Mar ) %>% suppressWarnings()
+# model6.mar2 <- model6 %>% update(.~. +Mar2)
+# model6.mar3 <- model6 %>% update(.~. +Mar3)
+# 
+# model6.mar1.sch <- model6.mar1 %>% cox.zph()
+# model6.mar2.sch <- model6.mar2 %>% cox.zph()
+# model6.mar3.sch <- model6.mar3 %>% cox.zph()
+# 
+# tab.mar <- bind_rows(
+#   Mar1 = sch(model6.mar1.sch, sort = FALSE),
+#   Mar2 = sch(model6.mar2.sch, sort = FALSE),
+#   Mar3 = sch(model6.mar3.sch, sort = FALSE),
+#   .id = "model",
+# ) %>%
+#   select(-chisq, -df) %>%
+#   pivot_wider(names_from = term, values_from = p) %>%
+#   as.matrix() %>%
+#   t() %>%
+#   as.data.frame()
+# colnames(tab.mar) <- tab.mar[1, ]
+# tab.mar <- tab.mar[-1, ]
+# tab.mar <- tab.mar %>% rownames_to_column("term")
 
-model6.mar1.sch <- model6.mar1 %>% cox.zph()
-model6.mar2.sch <- model6.mar2 %>% cox.zph()
-model6.mar3.sch <- model6.mar3 %>% cox.zph()
 
-tab.mar <- bind_rows(
-  Mar1 = sch(model6.mar1.sch, sort = FALSE),
-  Mar2 = sch(model6.mar2.sch, sort = FALSE),
-  Mar3 = sch(model6.mar3.sch, sort = FALSE),
-  .id = "model",
-) %>%
-  select(-chisq, -df) %>%
-  pivot_wider(names_from = term, values_from = p) %>%
-  as.matrix() %>%
-  t() %>%
-  as.data.frame()
-colnames(tab.mar) <- tab.mar[1, ]
-tab.mar <- tab.mar[-1, ]
-tab.mar <- tab.mar %>% rownames_to_column("term")

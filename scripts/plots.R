@@ -65,7 +65,8 @@ gg.ses <- gg +
 
 # survival curves ---------------------------------------------------------
 
-cxsf <- survfit(model6, newdata = newdat)
+# cxsf <- survfit(model6, newdata = newdat)
+cxsf <- survfit(model5, newdata = newdat)
 surv_cxsf <- surv_summary(cxsf, data = analytical) %>% tibble()
 m_newdat <- newdat[as.character(surv_cxsf$strata), ]
 
@@ -111,12 +112,12 @@ gg.surv.uncrop <- gg.surv +
 # # Schoenfeld residuals
 # ggcoxzph(cox.zph(mod.full), ggtheme = theme_ff(), font.main = 10)
 
-gg.cause <- update(mod.full, . ~ .
-                   -Cause
-                   + strata(Cause)
-                   # -FIMMOTD -FIMCOGD + FIMMOTD4 + FIMCOGD4
-                   ) %>%
-  survfit() %>%
-  ggsurvfit() +
-  theme_ff()
-gg.cause
+# gg.cause <- update(mod.full, . ~ .
+#                    -Cause
+#                    + strata(Cause)
+#                    # -FIMMOTD -FIMCOGD + FIMMOTD4 + FIMCOGD4
+#                    ) %>%
+#   survfit() %>%
+#   ggsurvfit() +
+#   theme_ff()
+# gg.cause

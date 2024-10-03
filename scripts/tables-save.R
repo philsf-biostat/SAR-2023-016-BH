@@ -64,28 +64,34 @@ model6.lab <- "Adjusted by demographic + geographical + clinical variables + FIM
 
 tab_inf <- tbl_merge(
   tbls = list(
-    model1 %>% tab(conf.int = FALSE), # crude HR
-    model2 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model2.lab), # aHR
-    model3 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model3.lab), # aHR
-    model4 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model4.lab), # aHR
-    model5 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model5.lab), # aHR
-    model6 %>% tab(conf.int = FALSE) %>% modify_footnote(estimate ~ model6.lab)  # aHR
+    model1 %>% tab() # crude HR
+    , model2 %>% tab() %>% modify_footnote(estimate ~ model2.lab) # aHR
+    , model3 %>% tab() %>% modify_footnote(estimate ~ model3.lab) # aHR
+    , model4 %>% tab() %>% modify_footnote(estimate ~ model4.lab) # aHR
+    , model5 %>% tab() %>% modify_footnote(estimate ~ model5.lab) # aHR
+    # , model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)  # aHR
   ),
-  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+                  )
   )
 
-# simplified version of T2
-tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
+# # simplified version of T2
+# tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
 
 # table A1 ----------------------------------------------------------------
 
-tab_mar_hr <- tbl_merge(
-  list(
-    model6.mar2 %>% tab(include = everything()),
-    model6.mar3 %>% tab(include = everything())
-  ),
-  c("Mar2", "Mar3")
-)
+# tab_mar_hr <- tbl_merge(
+#   list(
+#     model6.mar2 %>% tab(include = everything()),
+#     model6.mar3 %>% tab(include = everything())
+#   ),
+#   c("Mar2", "Mar3")
+# )
 
 # # use SE instead of CI
 # # theme_gtsummary_journal("qjecon")
@@ -94,14 +100,20 @@ tab_mar_hr <- tbl_merge(
 
 tab_app <- tbl_merge(
   tbls = list(
-    model1 %>% tab(include = everything()), # crude HR
-    model2 %>% tab(include = everything()), # aHR
-    model3 %>% tab(include = everything()), # aHR
-    model4 %>% tab(include = everything()), # aHR
-    model5 %>% tab(include = everything()), # aHR
-    model6 %>% tab(include = everything())
+    model1 %>% tab(include = everything()) # crude HR
+    , model2 %>% tab(include = everything()) # aHR
+    , model3 %>% tab(include = everything()) # aHR
+    , model4 %>% tab(include = everything()) # aHR
+    , model5 %>% tab(include = everything()) # aHR
+    # , model6 %>% tab(include = everything())
   ),
-  tab_spanner = c("Model 1", "Model 2", "Model 3", "Model 4", "Model 5", "Model 6")
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+                  )
   )
 
 # # revert theme to previous
@@ -113,5 +125,5 @@ tab_app <- tbl_merge(
 write_rds(tab_desc, "dataset/tab_desc_016.rds")
 write_rds(tab_inf, "dataset/tab_inf_016.rds")
 write_rds(tab_app, "dataset/tab_app_016.rds")
-tab_m6 %>% write_rds("dataset/tab_m6_016.rds")
-tab_mar_hr %>% write_rds("dataset/tab_mar_016.rds")
+# tab_m6 %>% write_rds("dataset/tab_m6_016.rds")
+# tab_mar_hr %>% write_rds("dataset/tab_mar_016.rds")

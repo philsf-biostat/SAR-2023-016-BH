@@ -15,7 +15,7 @@ estimates <- bind_rows(
   mod3 = model3 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
   mod4 = model4 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
   mod5 = model5 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
-  mod6 = model6 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
+  # mod6 = model6 %>% tidy(conf.int = TRUE, exponentiate = TRUE),
   .id = "model",
   ) %>%
   filter(str_detect(term, "^exposure")) %>%
