@@ -80,6 +80,41 @@ tab_inf <- tbl_merge(
                   )
   )
 
+tab_inf1 <- tbl_merge(
+  tbls = list(
+    model1.1 %>% tab() # crude HR
+    , model2.1 %>% tab() %>% modify_footnote(estimate ~ model2.lab) # aHR
+    , model3.1 %>% tab() %>% modify_footnote(estimate ~ model3.lab) # aHR
+    , model4.1 %>% tab() %>% modify_footnote(estimate ~ model4.lab) # aHR
+    , model5.1 %>% tab() %>% modify_footnote(estimate ~ model5.lab) # aHR
+    # , model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)  # aHR
+  ),
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+  )
+)
+tab_inf2 <- tbl_merge(
+  tbls = list(
+    model1.2 %>% tab() # crude HR
+    , model2.2 %>% tab() %>% modify_footnote(estimate ~ model2.lab) # aHR
+    , model3.2 %>% tab() %>% modify_footnote(estimate ~ model3.lab) # aHR
+    , model4.2 %>% tab() %>% modify_footnote(estimate ~ model4.lab) # aHR
+    , model5.2 %>% tab() %>% modify_footnote(estimate ~ model5.lab) # aHR
+    # , model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)  # aHR
+  ),
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+  )
+)
+
 # # simplified version of T2
 # tab_m6 <- model6 %>% tab() %>% modify_footnote(estimate ~ model6.lab)
 
@@ -116,6 +151,42 @@ tab_app <- tbl_merge(
                   )
   )
 
+tab_app1 <- tbl_merge(
+  tbls = list(
+    model1.1 %>% tab(include = everything()) # crude HR
+    , model2.1 %>% tab(include = everything()) # aHR
+    , model3.1 %>% tab(include = everything()) # aHR
+    , model4.1 %>% tab(include = everything()) # aHR
+    , model5.1 %>% tab(include = everything()) # aHR
+    # , model6 %>% tab(include = everything())
+  ),
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+  )
+)
+tab_app2 <- tbl_merge(
+  tbls = list(
+    model1.2 %>% tab(include = everything()) # crude HR
+    , model2.2 %>% tab(include = everything()) # aHR
+    , model3.2 %>% tab(include = everything()) # aHR
+    , model4.2 %>% tab(include = everything()) # aHR
+    , model5.2 %>% tab(include = everything()) # aHR
+    # , model6 %>% tab(include = everything())
+  ),
+  tab_spanner = c("Model 1"
+                  , "Model 2"
+                  , "Model 3"
+                  , "Model 4"
+                  , "Model 5"
+                  # , "Model 6"
+  )
+)
+
+
 # # revert theme to previous
 # theme_ff_gtsummary()
 # theme_gtsummary_compact()
@@ -127,3 +198,4 @@ write_rds(tab_inf, "dataset/tab_inf_016.rds")
 write_rds(tab_app, "dataset/tab_app_016.rds")
 # tab_m6 %>% write_rds("dataset/tab_m6_016.rds")
 # tab_mar_hr %>% write_rds("dataset/tab_mar_016.rds")
+writexl::write_xlsx(list("early" = sch.df1, "late" = sch.df2), "dataset/schoenfeld.xlsx")
