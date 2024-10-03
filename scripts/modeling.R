@@ -31,9 +31,55 @@ sch <- function(x, sort = TRUE) {
   x %>% mutate(p = style_pvalue(p))
 }
 
+# formulas ----------------------------------------------------------------
+
+# model1 = crude
+formula1 <- formula(Surv(Time, outcome) ~ exposure)
+
+# model2 = model1 + social
+formula2 <- formula(. ~ .
+                    + SexF
+                    + Race
+                    + AGE
+                    + EDUCATION
+                    + EMPLOYMENT
+)
+
+# model3 = model2 + geographical
+formula3 <- formula(. ~ .
+                    + ResDis
+                    + RURALdc
+)
+
+# model4 = model3 + clinical
+formula4 <- formula(. ~ .
+                    # + strata(Cause)
+                    + RehabPay1
+                    + SCI
+                    + PROBLEMUse
+                    # + DAYStoREHABdc
+)
+
+# model5 = model4 + FIM scores
+formula5 <- formula(. ~ .
+                    # + strata(Cause)
+                    # + FIMMOTD
+                    # + FIMCOGD
+                    + FIMMOTD4
+                    + FIMCOGD4
+)
+
+# model6 = model5 + FIM interactions
+formula6 <- formula(. ~ .
+                    # + strata(Cause)
+                    + FIMMOTD4*exposure
+                    + FIMCOGD4*exposure
+                    )
+
 # raw estimate ------------------------------------------------------------
 
-model1 <- coxph(Surv(Time, outcome) ~ exposure, md, id = id)
+# model1 = crude
+model1 <- coxph(formula1, md, id = id)
 
 # adjusted ----------------------------------------------------------------
 
@@ -56,44 +102,20 @@ mod.full <- coxph(Surv(Time, outcome) ~ exposure +
 
 # nested models -----------------------------------------------------------
 
-# crude + social
-model2 <- update(model1, . ~ .
-                     + SexF
-                     + Race
-                     + AGE
-                     + EDUCATION
-                     + EMPLOYMENT
-                     )
+# model2 = model1 + social
+model2 <- update(model1, formula2)
 
-# model2 + geographical
-model3 <- update(model2, . ~ .
-                    + ResDis
-                    + RURALdc
-                    )
+# model3 = model2 + geographical
+model3 <- update(model2, formula3)
 
-# model3 + clinical
-model4 <- update(model3, . ~ .
-                       # + strata(Cause)
-                       + RehabPay1
-                       + SCI
-                       + PROBLEMUse
-                       + DAYStoREHABdc
-                       )
-# model4 + FIM scores w/ interactions
-model5 <- update(model4, . ~ .
-                    # + strata(Cause)
-                    + FIMMOTD4
-                    + FIMCOGD4
-                    # + FIMMOTD4*exposure
-                    # + FIMCOGD4*exposure
-                    )
+# model4 = model3 + clinical
+model4 <- update(model3, formula4)
 
-# FIM interactions
-model6 <- update(model5, . ~ .
-                          # + strata(Cause)
-                          + FIMMOTD4*exposure
-                          + FIMCOGD4*exposure
-                          )
+# model5 = model4 + FIM scores
+model5 <- update(model4, formula5)
+
+# model6 = model5 + FIM interactions
+model6 <- update(model5, formula6)
 
 # Schoenfeld residuals of all models --------------------------------------
 
