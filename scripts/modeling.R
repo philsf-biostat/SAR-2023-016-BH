@@ -63,10 +63,10 @@ formula4 <- formula(. ~ .
 # model5 = model4 + FIM scores
 formula5 <- formula(. ~ .
                     # + strata(Cause)
-                    # + FIMMOTD
-                    # + FIMCOGD
-                    + FIMMOTD4
-                    + FIMCOGD4
+                    + FIMMOTD
+                    + FIMCOGD
+                    # + FIMMOTD4
+                    # + FIMCOGD4
 )
 
 # model6 = model5 + FIM interactions
