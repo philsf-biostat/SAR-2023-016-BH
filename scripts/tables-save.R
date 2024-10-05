@@ -23,17 +23,6 @@ theme_se <- list(
                        rlang::expr(gt::tab_style(style = "vertical-align:top", locations = gt::cells_body(columns = dplyr::any_of("label"))))
     )))
 
-tab <- function(model, include = contains("exposure"), ...) {
-  model %>%
-    tbl_regression(
-      exp = TRUE,
-      include = include,
-      ...
-      ) %>%
-    bold_labels() %>%
-    bold_p()
-}
-
 # table 1 -----------------------------------------------------------------
 
 # requires manually disabling "filter(FollowUpPeriod != 0)" in input (exclusion criteria: redundant participant observations: pick last date of follow up)

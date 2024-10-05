@@ -1,6 +1,17 @@
 # setup -------------------------------------------------------------------
 # library(infer)
 
+tab <- function(model, include = contains("exposure"), ...) {
+  model %>%
+    tbl_regression(
+      exp = TRUE,
+      include = include,
+      ...
+    ) %>%
+    bold_labels() %>%
+    bold_p()
+}
+
 # tables ------------------------------------------------------------------
 
 # tables are created in tables-save.R and saved to disk. They are loaded here
