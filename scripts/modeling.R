@@ -47,7 +47,7 @@ formula2 <- formula(. ~ .
 
 # model3 = model2 + geographical
 formula3 <- formula(. ~ .
-                    + ResDis
+                    # + ResDis
                     + RURALdc
 )
 
@@ -57,7 +57,7 @@ formula4 <- formula(. ~ .
                     + RehabPay1
                     + SCI
                     + PROBLEMUse
-                    # + DAYStoREHABdc
+                    + DAYStoREHABdc
 )
 
 # model5 = model4 + FIM scores
