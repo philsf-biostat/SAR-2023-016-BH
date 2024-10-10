@@ -1,11 +1,11 @@
+# 1 comment out cutpoint definition in modeling.R
+# 2 run modeling with each cutpoint
+# 3 save tables (once)
+
+cutpoint <- 1
 
 source("scripts/results.R")
 # source('scripts/tables-save.R', encoding = 'UTF-8') |> suppressMessages() ## only manual!
-
-# 1 run models
-# 2 save tables (once)
-# 3 comment out cutpoint definition in modeling.R
-# 4 run modeling with each cutpoint
 
 12*.1666 # 2 months
 cutpoint <- .1666

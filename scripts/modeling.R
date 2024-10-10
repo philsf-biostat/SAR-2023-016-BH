@@ -72,8 +72,10 @@ formula5 <- formula(. ~ .
 # model6 = model5 + FIM interactions
 formula6 <- formula(. ~ .
                     # + strata(Cause)
-                    + FIMMOTD4*exposure
-                    + FIMCOGD4*exposure
+                    # + FIMMOTD4*exposure
+                    # + FIMCOGD4*exposure
+                    + FIMMOTD*exposure
+                    + FIMCOGD*exposure
                     )
 
 # raw estimate ------------------------------------------------------------
@@ -234,6 +236,9 @@ model4.2 <- update(model3.2, formula4)
 model5.1 <- update(model4.1, formula5)
 model5.2 <- update(model4.2, formula5)
 
+model6.1 <- update(model5.1, formula6)
+model6.2 <- update(model5.2, formula6)
+
 model1.1.sch <- model1.1 %>% cox.zph()
 model1.2.sch <- model1.2 %>% cox.zph()
 model2.1.sch <- model2.1 %>% cox.zph()
@@ -244,6 +249,8 @@ model4.1.sch <- model4.1 %>% cox.zph()
 model4.2.sch <- model4.2 %>% cox.zph()
 model5.1.sch <- model5.1 %>% cox.zph()
 model5.2.sch <- model5.2 %>% cox.zph()
+model6.1.sch <- model6.1 %>% cox.zph()
+model6.2.sch <- model6.2 %>% cox.zph()
 
 sch.df1 <- bind_rows(
   model1.1 = sch(model1.1.sch, sort = FALSE),
@@ -251,7 +258,7 @@ sch.df1 <- bind_rows(
   model3.1 = sch(model3.1.sch, sort = FALSE),
   model4.1 = sch(model4.1.sch, sort = FALSE),
   model5.1 = sch(model5.1.sch, sort = FALSE),
-  # model6 = sch(model6.sch, sort = FALSE),
+  model6.1 = sch(model6.1.sch, sort = FALSE),
   .id = "model",
 ) %>%
   select(-chisq, -df) %>%
@@ -269,7 +276,7 @@ sch.df2 <- bind_rows(
   model3.2 = sch(model3.2.sch, sort = FALSE),
   model4.2 = sch(model4.2.sch, sort = FALSE),
   model5.2 = sch(model5.2.sch, sort = FALSE),
-  # model6 = sch(model6.sch, sort = FALSE),
+  model6.2 = sch(model6.2.sch, sort = FALSE),
   .id = "model",
 ) %>%
   select(-chisq, -df) %>%
