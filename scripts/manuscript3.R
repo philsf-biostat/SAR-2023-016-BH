@@ -69,3 +69,69 @@ writexl::write_xlsx(list("early" = sch.df1, "late" = sch.df2), "dataset/schoenfe
 
 # tbl_merge(list(model4.1 %>% tab, model5.2 %>% tab), c("Model 4 early", "Model 5 late"))
 # tbl_merge(list(model4.1 %>% tab, model5.2 %>% tab), c("Model 4 early", "Model 5 late")) %>% as_gt() %>% gtsave("~/Downloads/Brennan delivery/tab_inf_6mo.png")
+
+
+# save tables -------------------------------------------------------------
+
+## 2 months
+## ## FIM MOT COG
+## ## MOT
+## 3 months
+## ## empl MOT COG
+## ## MOT
+## 4 months
+## ## MOT COG
+## ## none
+## 6 months
+## ## MOT COG
+## ## none
+
+# 12*.333 # 4 months
+# cutpoint <- .333
+# source("~/Documents/Consultoria/2023/SAR/SAR-2023-016-BH/scripts/modeling.R")
+# 
+# sch.df1 # none # MOT COG
+# sch.df2 # none # none
+# 
+# tab_app1 <- tbl_merge(
+#   tbls = list(
+#     model1.1 %>% tab(include = everything()) # crude HR
+#     , model2.1 %>% tab(include = everything()) # aHR
+#     , model3.1 %>% tab(include = everything()) # aHR
+#     , model4.1 %>% tab(include = everything()) # aHR
+#     #, model5.1 %>% tab(include = everything()) # aHR
+#     #, model6.1 %>% tab(include = everything())
+#   ),
+#   tab_spanner = c("Model 1"
+#                   , "Model 2"
+#                   , "Model 3"
+#                   , "Model 4"
+#                   #              , "Model 5"
+#                   #              , "Model 6"
+#   )
+# )
+# tab_app2 <- tbl_merge(
+#   tbls = list(
+#     # model1.2 %>% tab(include = everything()) # crude HR
+#     #,
+#     model2.2 %>% tab(include = everything()) # aHR
+#     , model3.2 %>% tab(include = everything()) # aHR
+#     , model4.2 %>% tab(include = everything()) # aHR
+#     , model5.2 %>% tab(include = everything()) # aHR
+#     , model6.2 %>% tab(include = everything())
+#   ),
+#   tab_spanner = c(#"Model 1"
+#                   #,
+#     "Model 2"
+#                   , "Model 3"
+#                   , "Model 4"
+#                   , "Model 5"
+#                   , "Model 6"
+#   )
+# )
+# 
+# tab_app1
+# tab_app2
+# 
+# tab_app1 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_interactions_early.rtf")
+tab_app2 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_interactions_late.rtf")
