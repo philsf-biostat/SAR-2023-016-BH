@@ -57,7 +57,8 @@ formula4 <- formula(. ~ .
                     + RehabPay1
                     + SCI
                     + PROBLEMUse
-                    + DAYStoREHABdc
+                    # + DAYStoREHABdc
+                    + los
 )
 
 # model5 = model4 + FIM scores
@@ -176,7 +177,8 @@ newdat <- expand.grid(
   SCI = "No",
   Cause = "Vehicular",
   ResDis = "Private Residence",
-  DAYStoREHABdc = round(mean(analytical$DAYStoREHABdc, na.rm = TRUE)),
+  # DAYStoREHABdc = round(mean(analytical$DAYStoREHABdc, na.rm = TRUE)),
+  los = round(mean(analytical$los, na.rm = TRUE)),
   FIMMOTD = round(mean(analytical$FIMMOTD, na.rm = TRUE)),
   FIMCOGD = round(mean(analytical$FIMCOGD, na.rm = TRUE)),
   FIMMOTD4 = "Q2",
