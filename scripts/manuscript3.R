@@ -11,7 +11,7 @@ cutpoint <- 1
 source("scripts/input-brennan.R")
 source('scripts/describe.R', encoding = 'UTF-8') |> suppressMessages()
 # define Length of Stay in periods of 3 days (DAYStoREHABdc)
-analytical <- analytical %>% mutate(los=DAYStoREHABdc/3) %>% set_variable_labels(los = attr(analytical$DAYStoREHABdc, "label"))
+analytical <- analytical %>% mutate(los=DAYStoREHABdc/3) %>% set_variable_labels(los = "Length of stay")
 source('scripts/modeling.R', encoding = 'UTF-8') |> suppressMessages()
 source('scripts/inference.R', encoding = 'UTF-8') |> suppressMessages()
 source('scripts/plots.R', encoding = 'UTF-8') |> suppressMessages()
