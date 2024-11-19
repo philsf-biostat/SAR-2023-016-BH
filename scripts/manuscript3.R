@@ -1,6 +1,6 @@
 # instructions ------------------------------------------------------------
 
-# 1 comment out cutpoint definition in modeling.R
+# 1 comment out "cutpoint <- 1" definition in modeling.R (section "time-dependent")
 # 2 run modeling with each cutpoint
 # 3 save tables (once)
 
@@ -8,7 +8,13 @@
 
 cutpoint <- 1
 
-source("scripts/results.R")
+source("scripts/input-brennan.R")
+source('scripts/describe.R', encoding = 'UTF-8') |> suppressMessages()
+# set Time to days
+analytical <- analytical %>% mutate(Time=duration(years=Time)/ddays(3))
+source('scripts/modeling.R', encoding = 'UTF-8') |> suppressMessages()
+source('scripts/inference.R', encoding = 'UTF-8') |> suppressMessages()
+source('scripts/plots.R', encoding = 'UTF-8') |> suppressMessages()
 # source('scripts/tables-save.R', encoding = 'UTF-8') |> suppressMessages() ## only manual!
 
 # 2 months ----------------------------------------------------------------
