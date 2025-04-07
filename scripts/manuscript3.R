@@ -112,26 +112,24 @@ writexl::write_xlsx(list("early" = sch.df1, "late" = sch.df2), "dataset/schoenfe
 # )
 # tab_app2 <- tbl_merge(
 #   tbls = list(
-#     # model1.2 %>% tab(include = everything()) # crude HR
-#     #,
-#     model2.2 %>% tab(include = everything()) # aHR
+#     model1.2 %>% tab(include = everything()) # crude HR
+#     , model2.2 %>% tab(include = everything()) # aHR
 #     , model3.2 %>% tab(include = everything()) # aHR
 #     , model4.2 %>% tab(include = everything()) # aHR
 #     , model5.2 %>% tab(include = everything()) # aHR
-#     , model6.2 %>% tab(include = everything())
+#     # , model6.2 %>% tab(include = everything())
 #   ),
-#   tab_spanner = c(#"Model 1"
-#                   #,
-#     "Model 2"
+#   tab_spanner = c("Model 1"
+#                   , "Model 2"
 #                   , "Model 3"
 #                   , "Model 4"
 #                   , "Model 5"
-#                   , "Model 6"
+#                   # , "Model 6"
 #   )
 # )
 # 
 # tab_app1
 # tab_app2
 # 
-# tab_app1 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_interactions_early.rtf")
-tab_app2 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_interactions_late.rtf")
+# tab_app1 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_no_interactions_early.rtf")
+# tab_app2 %>% as_gt() %>% gtsave("~/Downloads/tab_app_4mo_no_interactions_late.rtf")
