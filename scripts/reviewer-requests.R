@@ -11,8 +11,17 @@ md %>%
   ) %>% select(Time, fu) %>%
   tbl_summary(
     label = list(Time="Follow-up time, continuous (years)", fu="Follow-up time, categorical (years)"),
-  )
+  ) #%>% as_gt() %>% gtsave("~/Downloads/tab_follow-up_time.rtf")
 
 # counts of Education categories (collapsed)
 # Obs: raw data is not available in the "Brennan data" dataset
 md %>% count(EDUCATION)
+
+# raw data EDUCATION
+read_rds("dataset/raw/tbims_form1_raw.rds") %>%
+  # missing data treatment: explicit NA
+  naniar::replace_with_na(replace=list(EDUCATION=c(999))) %>%
+  # convert haven_labelled to factor (missing value codes are used automatically)
+  mutate(across(where(is.labelled), as_factor),) %>%
+  select(EDUCATION) %>%
+  tbl_summary() #%>% as_gt() %>% gtsave("~/Downloads/tab_education_raw.rtf")
