@@ -24,4 +24,6 @@ read_rds("dataset/raw/tbims_form1_raw.rds") %>%
   # convert haven_labelled to factor (missing value codes are used automatically)
   mutate(across(where(is.labelled), as_factor),) %>%
   select(EDUCATION) %>%
+  mutate(EDUCATION = fct_recode(EDUCATION, "Bachelor's or greater" = "21")) %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
   tbl_summary() #%>% as_gt() %>% gtsave("~/Downloads/tab_education_raw.rtf")
