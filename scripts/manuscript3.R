@@ -99,14 +99,14 @@ writexl::write_xlsx(list("early" = sch.df1, "late" = sch.df2), "dataset/schoenfe
 #     , model2.1 %>% tab(include = everything()) # aHR
 #     , model3.1 %>% tab(include = everything()) # aHR
 #     , model4.1 %>% tab(include = everything()) # aHR
-#     #, model5.1 %>% tab(include = everything()) # aHR
+#     , model5.1 %>% tab(include = everything()) # aHR
 #     #, model6.1 %>% tab(include = everything())
 #   ),
 #   tab_spanner = c("Model 1"
 #                   , "Model 2"
 #                   , "Model 3"
 #                   , "Model 4"
-#                   #              , "Model 5"
+#                                , "Model 5"
 #                   #              , "Model 6"
 #   )
 # )

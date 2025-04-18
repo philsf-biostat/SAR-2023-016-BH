@@ -64,8 +64,9 @@ formula4 <- formula(. ~ .
 # model5 = model4 + FIM scores
 formula5 <- formula(. ~ .
                     # + strata(Cause)
-                    + FIMMOTD
-                    + FIMCOGD
+                    + Time
+                    + FIMMOTD*Time
+                    + FIMCOGD*Time
                     # + FIMMOTD4
                     # + FIMCOGD4
 )
@@ -77,6 +78,8 @@ formula6 <- formula(. ~ .
                     # + FIMCOGD4*exposure
                     + FIMMOTD*exposure
                     + FIMCOGD*exposure
+                    + FIMMOTD*Time
+                    + FIMCOGD*Time
                     )
 
 # raw estimate ------------------------------------------------------------
@@ -215,7 +218,7 @@ rownames(newdat) <- letters[1:10]
 # time-dependent ----------------------------------------------------------
 
 # time split (years)
-cutpoint <- 1
+# cutpoint <- 1
 
 md2 <- md %>%
   mutate(
